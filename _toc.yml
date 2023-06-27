@@ -1,6 +1,12 @@
 format: jb-book
 root: README
 parts:
-  - caption: Introduction
-    chapters:
+  - caption: Creating and Analysing Cloud Regimes
+  - chapters: Introduction
+    file: Intro
+  - chapter: Choosing a Value of k
+    - file: k_sensitivity_testing
+  - chapters: Testing Cluster Robustness / Repeatability of Results
       - file: notebooks/notebook-template
+  - chapters: Mapping Cloud Regimes
+      - file: simple_cluster_and_analyze
