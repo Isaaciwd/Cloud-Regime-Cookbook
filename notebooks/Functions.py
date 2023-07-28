@@ -5,7 +5,11 @@ lgr.getLogger('matplotlib').setLevel(lgr.WARNING)
 lgr.getLogger('numba').setLevel(lgr.WARNING)
 from time import perf_counter
 import numpy as np
-import wasserstein
+try : import wasserstein
+except: 
+    print('Wasserstein package is not installed so wasserstein distance cannot be used. Attempting to use wassertein distance will raise an error.')
+    print('To use wasserstein distance please install the wasserstein package in your environment: https://pypi.org/project/Wasserstein/ ')
+    print()
 import matplotlib.pyplot as plt
 from scipy import sparse
 import xarray as xr
@@ -14,20 +18,18 @@ from numba import njit
 from sklearn.cluster import KMeans
 from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 import cartopy.crs as ccrs
-from sklearn.cluster import KMeans
+import cartopy
 import glob
 from math import ceil
 from shapely.geometry import Point
-import cartopy
 from shapely.prepared import prep
-from numba import njit
 import dask
-
+#%%
 # Avoid creation of large chunks with dask
 dask.config.set({"array.slicing.split_large_chunks": False})
 
 # Open data, process into an (n_observation, n_dims) matrix for clustering, cluster and or create cluster labels, and return them
-def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_var_name, ht_var_name, lat_var_name, lon_var_name, height_or_pressure, wasserstein_or_euclidean = "euclidean", premade_cloud_regimes=None, lat_range=None, lon_range=None, time_range=None, only_ocean_or_land=False, land_frac_var_name=None, cluster=True):
+def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_var_name, ht_var_name, lat_var_name, lon_var_name, height_or_pressure, wasserstein_or_euclidean = "euclidean", premade_cloud_regimes=None, lat_range=None, lon_range=None, time_range=None, only_ocean_or_land=False, land_frac_var_name=None, cluster=True, gpu=False):
     # Getting files
     files = glob.glob(data_path)
     # Opening an initial dataset
@@ -147,21 +149,22 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
     
     # If cluster is not true, then skip clustering and just return the oopened and preprocessed data
     lgr.info(' Finished preprocessing:')
-    if cluster == False:
-        return mat, valid_indicies, ds, histograms
 
+    if cluster == False:
+        return mat, valid_indicies, ds, histograms, weights
+    
     # If the function call sepecifies to cluster/calcuate cluster labels, then do it
     else:
         # Use premade clusters to calculate cluster labels (using specified distance metric) if they have been provided
-        if type(premade_cloud_regimes) == np.ndarray:
+        if type(premade_cloud_regimes) == str:
             lgr.info(' Calculating cluster_labels for premade_cloud_regimes:')
             s = perf_counter()
-            cl = premade_cloud_regimes
-            k = len(premade_cloud_regimes)
-            if premade_cloud_regimes.shape != (k,len(ds[tau_var_name]) * len(ds[ht_var_name])):
+            cl = np.load(premade_cloud_regimes)
+            k = len(cl)
+            if cl.shape != (k,len(ds[tau_var_name]) * len(ds[ht_var_name])):
                 raise Exception (f'premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {premade_cloud_regimes.shape}, but must be shpae {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} to fit the loaded data')
-            cluster_labels_temp = precomputed_clusters(mat, cl, wasserstein_or_euclidean)
-            lgr.info(f' {round(perf_counter()-s)} seconds to calculatecluster_labels for premade_cloud_regimes:')
+            cluster_labels_temp = precomputed_clusters(mat, cl, wasserstein_or_euclidean, ds, tau_var_name, ht_var_name)
+            lgr.info(f' {round(perf_counter()-s)} seconds to calculate cluster_labels for premade_cloud_regimes:')
             
         # Otherwise preform clustering with specified distance metric
         else:
@@ -170,7 +173,7 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
             if wasserstein_or_euclidean == "wasserstein":
                 cl, cluster_labels_temp, il, cl_list = emd_means(mat, k, tol, init, n_init, ds, tau_var_name, ht_var_name, max_iter, weights = None)
             elif wasserstein_or_euclidean == "euclidean":
-                cl, cluster_labels_temp = euclidean_kmeans(k, init, n_init, mat, max_iter)
+                cl, cluster_labels_temp = euclidean_kmeans(k, init, n_init, mat, max_iter, tol, gpu)
             else: raise Exception ('Invalid option for wasserstein_or_euclidean. Please enter "wasserstein", "euclidean", or a numpy ndarray to use as premade cloud regimes and preform no clustering')
             lgr.info(f' {round(perf_counter()-s)} seconds to cluster:')
 
@@ -179,11 +182,10 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
         cluster_labels[valid_indicies]=cluster_labels_temp
         cluster_labels = xr.DataArray(data=cluster_labels, coords={"spacetime":histograms.spacetime},dims=("spacetime") )
         cluster_labels = cluster_labels.unstack()
-
         return mat, cluster_labels, cluster_labels_temp, valid_indicies, ds
 
 # Plot the CR cluster centers
-def plot_hists(cluster_labels, k, ds, ht_var_name, tau_var_name, valid_indicies, mat, cluster_labels_temp, height_or_pressure):
+def plot_hists(cluster_labels, k, ds, ht_var_name, tau_var_name, valid_indicies, mat, cluster_labels_temp, height_or_pressure, save_path):
 
     # setting up plots
     ylabels = ds[ht_var_name].values
@@ -210,7 +212,7 @@ def plot_hists(cluster_labels, k, ds, ht_var_name, tau_var_name, valid_indicies,
     # Plotting each cluster center
     for i in range (k):
 
-        # Area Weighted relative Frequency of occurrence calculation
+        # Area Weighted relative Frequency of occurence calculation
         total_rfo_num = cluster_labels == i 
         total_rfo_num = np.sum(total_rfo_num * np.cos(np.deg2rad(cluster_labels.lat)))
         total_rfo_denom = cluster_labels >= 0
@@ -258,10 +260,17 @@ def plot_hists(cluster_labels, k, ds, ht_var_name, tau_var_name, valid_indicies,
     for i in range(ceil(k/3)*3-k):
         aa[-(i+1)].remove()
 
-    #return mat, cluster_labels, cluster_labels_temp, valid_indicies, ds
+    if save_path != None:
+        plt.savefig(save_path + 'cluster_centers.png')
+
+    plt.show()
+    plt.close()
+
+    #TODO why is this here?
+    return mat, cluster_labels, cluster_labels_temp, valid_indicies, ds
 
 # Plot RFO maps of the CRss
-def plot_rfo(cluster_labels, k ,ds):
+def plot_rfo(cluster_labels, k ,ds, save_path):
     
     COLOR = 'black'
     mpl.rcParams['text.color'] = COLOR
@@ -269,7 +278,7 @@ def plot_rfo(cluster_labels, k ,ds):
     mpl.rcParams['xtick.color'] = COLOR
     mpl.rcParams['ytick.color'] = COLOR
     plt.rcParams.update({'font.size': 10})
-    plt.rcParams['figure.dpi'] = 500
+    plt.rcParams['figure.dpi'] = 150
     fig_height = 2.2 * ceil(k/2)
     fig, ax = plt.subplots(ncols=2, nrows=int(k/2 + k%2), subplot_kw={'projection': ccrs.PlateCarree()}, figsize = (10,fig_height))#, sharex='col', sharey='row')
     plt.subplots_adjust(wspace=0.13, hspace=0.05)
@@ -332,8 +341,13 @@ def plot_rfo(cluster_labels, k ,ds):
     bbox = aa[1].get_position()
     p1 = bbox.p1
     plt.suptitle(f"CR Relative Frequency of Occurence", x= 0.43, y= p1[1]+(1/fig_height * 0.5))#, {round(cl[cluster,23],4)}")
+    
+    if save_path != None:
+        plt.savefig(save_path + 'rfo_maps.png')
 
     plt.show()
+    plt.close()
+
 
 # K-means algorithm that uses wasserstein distance
 def emd_means(mat, k, tol, init, n_init, ds, tau_var_name, ht_var_name, hard_stop = 45, weights = None):
@@ -490,14 +504,41 @@ def emd_means(mat, k, tol, init, n_init, ds, tau_var_name, ht_var_name, hard_sto
     return centroid_tracking[best_result], labels, inertia_tracking, centroid_tracking
 
 # Conventional kmeans using sklearn
-def euclidean_kmeans(k, init, n_init, mat, max_iter):
-    # Seting up kmeans nd fitting the data
-    kmeans = KMeans(n_clusters=k, init = init, n_init = n_init, max_iter=max_iter).fit(mat)
-    # Retreiving cluster labels
-    cluster_labels_temp = kmeans.labels_
-    # Retreiving cluster centers
-    cl = kmeans.cluster_centers_
+def euclidean_kmeans(k, init, n_init, mat, max_iter, tol, gpu = False):
+    if gpu == False:
+        # Seting up kmeans nd fitting the data
+        kmeans = KMeans(n_clusters=k, init = init, n_init = n_init, max_iter=max_iter+1, tol=tol).fit(mat)
+        # Retreiving cluster labels
+        cluster_labels_temp = kmeans.labels_
+        # Retreiving cluster centers
+        cl = kmeans.cluster_centers_
 
+        # Checking for convergence
+        if kmeans.n_iter_ == max_iter+1:
+            raise Exception ('KMeans did not converge. Either tol is set too small, or max_iter is too small. Please change one and try again')
+   
+    # TODO: test this on GPU, does .n_iter_ work for CUML?
+    if gpu == True:
+        import cuml
+        import cupy as cp
+
+        # If user wants kmeans++, use cumls fast and parallelized GPU implimentation
+        if init == "k-means++": init = 'k-means||'
+
+        # Moving mat onto GPU
+        gpu_mat = cp.asarray(mat)
+        # Initializing kmeans
+        kmeans=cuml.cluster.KMeans(n_clusters=k, max_iter=max_iter+1, init=init, tol= tol, n_init=n_init, output_type = "numpy")
+        # Fitting data
+        kmeans.fit(gpu_mat)
+        # Retreiving cluster_centers and labels
+        cl = kmeans.cluster_centers_
+        cluster_labels_temp = kmeans.labels_
+
+        # Checking for convergence
+        if kmeans.n_iter_ == max_iter+1:
+            raise Exception ('KMeans did not converge. Either tol is set too small, or max_iter is too small. Please change one and try again')
+   
     return cl, cluster_labels_temp
 
 # Compute cluster labels from precomputed cluster centers with appropriate distance
@@ -589,9 +630,8 @@ def create_land_mask(ds):
 
     return oh_land
 
-# Plot histograms from cluster_robustness_testing.py
-def plot_hists_k_testing(histograms, k, ds, tau_var_name, ht_var_name, height_or_pressure):
-    
+# Plot histograms from k_sensitivty_testing.py
+def plot_hists_k_testing(histograms, k, ds, tau_var_name, ht_var_name, height_or_pressure, save_path):
     # Converting fractional data to percent to plot properly
     if np.max(histograms) <= 1:
         histograms *= 100
@@ -647,11 +687,18 @@ def plot_hists_k_testing(histograms, k, ds, tau_var_name, ht_var_name, height_or
         for i in range(ceil(k/3)*3-k):
             aa[-(i+1)].remove()
 
+    if save_path != None:
+        plt.savefig(save_path + f'{k}k_sensitivity_testing_histograms.png')
+
+    plt.show()
+    plt.close()
+
+
 # Create correlation matricies between the cluster centers of all cloud regimes
-def histogram_cor(cl):
+def histogram_cor(cl, save_path):
 
     # Creating Correlation pcolormesh
-    plt.figure(figsize=(8, 6), dpi=350)
+    plt.figure(figsize=(8, 6), dpi=150)
     MxClusters = len(cl)
     cor_coefs = np.zeros((MxClusters,MxClusters))
 
@@ -671,7 +718,7 @@ def histogram_cor(cl):
     positions = np.arange(MxClusters)+0.2
     for i in range (MxClusters):
         for x in range (MxClusters):
-            plt.text(positions[i],positions[x]+0.1, round(cor_coefs[i,x],2), color='palevioletred')
+            plt.text(positions[i],positions[x]+0.1, round(cor_coefs[i,x],2), color='k')
 
     plt.xticks(ticks = positions+0.3, labels = ticklabels)
     plt.yticks(ticks = positions+0.3, labels = ticklabels)
@@ -682,24 +729,36 @@ def histogram_cor(cl):
     # plt.clf()
     plt.show()
 
+    if np.max(cor_coefs[np.triu_indices(MxClusters, k=1)]) > 0.8:
+        print(f'k = {MxClusters} failed the histogram correlation test. The maximum alowable correlation is 0.8, but the maximum correlation is {round(np.max(cor_coefs[np.triu_indices(MxClusters, k=1)]),2)}')
+    
+    if save_path != None:
+        plt.savefig(save_path + f'{MxClusters}k_histogram_correlations.png')
+
+    plt.show()
+    plt.close()
+
 # Create correlation matricies between the spatial distribution of all cloud regimes
-def spacial_cor(cluster_labels, k):
+def spacial_cor(cluster_labels_temp, k, save_path):
 
-    all_rfo = np.zeros((k,len(cluster_labels.mean(('time')).values.flatten())))
-    # Plotting the rfo of each cluster
+    # Making one hot array shape (k,num_observations) where the observation = a cluster
+    all_rfo = np.zeros((k,len(cluster_labels_temp)))
     for cluster in range(0,k):
-        # Calculating rfo
-        rfo = np.sum(cluster_labels==cluster, axis=0) / np.sum(cluster_labels >= 0, axis=0) * 100
-        all_rfo[cluster] = rfo.values.flatten()
+        all_rfo[cluster] = cluster_labels_temp == cluster
 
+    # Masking out invalid values, accounts for differing fill values
     all_rfo = np.ma.masked_invalid(all_rfo)
+    all_rfo = np.ma.masked_where(all_rfo<0, all_rfo)
+    all_rfo = np.ma.masked_where(all_rfo>k-1, all_rfo)
+
     # Creating Correlation pcolormesh
-    plt.figure(figsize=(8, 6), dpi=350)
+    plt.figure(figsize=(8, 6), dpi=150)
     cor_coefs = np.zeros((k,k))
     for i in range (k):
         for x in range (k):
             cor_coefs[i,x] = np.ma.corrcoef(all_rfo[i],all_rfo[x])[0,1]
 
+    # Setting up plot
     cmap = plt.cm.get_cmap('Spectral').reversed()
     im = plt.pcolormesh(cor_coefs, vmin = -1, vmax =1, cmap = cmap)
     plt.colorbar(im)
@@ -711,11 +770,114 @@ def spacial_cor(cluster_labels, k):
     positions = np.arange(k)+0.2
     for i in range (k):
         for x in range (k):
-            plt.text(positions[i],positions[x]+0.1, round(cor_coefs[i,x],2), color='palevioletred')
+            plt.text(positions[i],positions[x]+0.1, round(cor_coefs[i,x],2), color='k')
 
     plt.xticks(ticks = positions+0.3, labels = ticklabels)
     plt.yticks(ticks = positions+0.3, labels = ticklabels)
 
     plt.title(f"Spacial Correlation Matrices of WSs, K = {k}")
+   
+    if save_path != None:
+        plt.savefig(save_path + f'{k}k_space_time_correlation_matrix.png')
 
     plt.show()
+    plt.close()
+
+
+    # old version that doesnt take into account time correlation
+
+    # all_rfo = np.zeros((k,len(cluster_labels.mean(('time')).values.flatten())))
+    # all_rfo = cluster_labels.values.flatten()
+    # # Plotting the rfo of each cluster
+    # # for cluster in range(0,k):
+    # #     # Calculating rfo
+    # #     rfo = np.sum(cluster_labels==cluster, axis=0) / np.sum(cluster_labels >= 0, axis=0) * 100
+    # #     all_rfo[cluster] = rfo.values.flatten()
+
+    # all_rfo = np.ma.masked_invalid(all_rfo)
+
+
+    # # Creating Correlation pcolormesh
+    # plt.figure(figsize=(8, 6), dpi=150)
+    # cor_coefs = np.zeros((k,k))
+    # for i in range (k):
+    #     for x in range (k):
+    #         cor_coefs[i,x] = np.ma.corrcoef(all_rfo[i],all_rfo[x])[0,1]
+
+    # cmap = plt.cm.get_cmap('Spectral').reversed()
+    # im = plt.pcolormesh(cor_coefs, vmin = -1, vmax =1, cmap = cmap)
+    # plt.colorbar(im)
+
+    # ticklabels = []
+    # for i in range(k):
+    #     ticklabels.append(f'WS{i+1}')
+
+    # positions = np.arange(k)+0.2
+    # for i in range (k):
+    #     for x in range (k):
+    #         plt.text(positions[i],positions[x]+0.1, round(cor_coefs[i,x],2), color='palevioletred')
+
+    # plt.xticks(ticks = positions+0.3, labels = ticklabels)
+    # plt.yticks(ticks = positions+0.3, labels = ticklabels)
+
+    # plt.title(f"Spacial Correlation Matrices of WSs, K = {k}")
+
+    # plt.show()
+
+# Create correlation matricies between the cluster centers of k and (k+1) CRs
+def kp1_histogram_cor(cl1, cl2, save_path):
+
+    # Creating Correlation pcolormesh
+    plt.figure(figsize=(8, 6), dpi=150)
+    k1, k2 = len(cl1), len(cl2)
+    cor_coefs = np.zeros((k1,k2))
+
+    for i in range (k1):
+        for x in range (k2):
+            cor_coefs[i,x] = np.corrcoef(cl1[i].flatten(),cl2[x].flatten())[0,1]
+
+    cmap = plt.cm.get_cmap('Spectral').reversed()
+
+    im = plt.pcolormesh(cor_coefs, vmin = -1, vmax = 1, cmap = cmap)
+    plt.colorbar(im)
+
+    ticklabels = []
+    for i in range(k1):
+        ticklabels.append(f'CR{i+1}')
+    ticklabels2 = []
+    for i in range(k2):
+        ticklabels2.append(f'CR{i+1}')
+
+    positions = np.arange(k1)+0.2
+    positions2 = np.arange(k2)+0.2
+    for i in range (k1):
+        for x in range (k2):
+            plt.text(positions2[x], positions[i]+0.1, round(cor_coefs[i,x],2), color='k')
+
+    plt.yticks(ticks = positions+0.3, labels = ticklabels)
+    plt.xticks(ticks = positions2+0.3, labels = ticklabels2)
+
+    plt.title(f"K+1 Histogram Correlation Matrices")
+
+    # mins = np.min(cor_coefs, axis=0)
+    # if mins.max() < 0.5:
+    #     print(f'k = {k2} is too small. A new pattern has appeared using k = {k1} ')
+    # else:
+    #     print(f'k = {k2} is too large. A new pattern did not appear going from k = {k1} to k = {k2}')
+    
+    if save_path != None:
+        plt.savefig(save_path + f'{k1}-{k2}_space_time_correlation_matrix.png')
+
+    plt.show()
+    plt.close()
+
+    # plt.clf()
+
+    # if np.max(cor_coefs[np.triu_indices(k, k=1)]) > 0.8:
+    #     print(f'k = {k} failed the histogram correlation test. The maximum alowable correlation is 0.8, but the maximum correlation is {round(np.max(cor_coefs),2)}')
+
+# %%
+
+
+
+# %%

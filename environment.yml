@@ -5,6 +5,15 @@ dependencies:
   - jupyter-book
   - jupyterlab
   - jupyter_server
+  - numpy
+  - xarray 
+  - matplotlib
+  - scipy
+  - numba
+  - sklearn
+  - cartopy
+  - shapely
+  - dask
   - pip
   - pip:
       - sphinx-pythia-theme
