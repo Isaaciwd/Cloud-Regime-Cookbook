@@ -1,19 +1,22 @@
 <img src="thumbnail.png" alt="thumbnail" width="300"/>
 
-# (Replace_with_your_title) Cookbook
+# Cloud Regime Cookbook
 
 [![nightly-build](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml)
 [![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks)
 
-This Project Pythia Cookbook covers ... (replace `...` with the main subject of your cookbook ... e.g., _working with radar data in Python_)
+This Project Pythia Cookbook covers creating and analyzing Cloud Regimes   
+<!(replace `...` with the main subject of your cookbook ... e.g., _working with radar data in Python_)>
 
 ## Motivation
+
+The purpose of this cookbook is to lower the barrier to entry of Cloud Regime analysis. This cookbook will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, and then creates maps of the resultant Cloud regimes.  
 
 (Add a few sentences stating why this cookbook will be useful. What skills will you, "the chef", gain once you have reached the end of the cookbook?)
 
 ## Authors
 
-[First Author](@first-author), [Second Author](@second-author), etc. _Acknowledge primary content authors here_
+[Isaac Davis](@first-author), [Second Author](@second-author), etc. _Acknowledge primary content authors here_
 
 ### Contributors
 
@@ -25,17 +28,26 @@ This Project Pythia Cookbook covers ... (replace `...` with the main subject of 
 
 (State one or more sections that will comprise the notebook. E.g., _This cookbook is broken up into two main sections - "Foundations" and "Example Workflows."_ Then, describe each section below.)
 
-### Section 1 ( Replace with the title of this section, e.g. "Foundations" )
+### Introduction
 
-(Add content for this section, e.g., "The foundational content includes ... ")
+An introduction to the concept of Cloud Regimes and how they are used.
 
-### Section 2 ( Replace with the title of this section, e.g. "Example workflows" )
+### Choosing a Value of k
 
-(Add content for this section, e.g., "Example workflows include ... ")
+This section walks the user through deciding on a value of k, or the number of clusters/Cloud Regimes to create.
+
+### Testing Cluster Robustness / Repeatability of Results
+
+How to check that results are robust and repeatable.
+
+### Mapping Cloud Regimes 
+Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis.
+
+
 
 ## Running the Notebooks
 
-You can either run the notebook using [Binder](https://binder.projectpythia.org/) or on your local machine.
+You can either run the notebook using [Binder](https://binder.projectpythia.org/) or on your local machine. Some features will not be available on the Binder. If you wish to use your own data, a GPU with euclidean k-means, or if you wish to use Wasserstein k-means it is best to run on a local machine.
 
 ### Running on Binder
 

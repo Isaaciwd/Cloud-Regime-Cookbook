@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;no title&gt; &#8212; Cloud Regimes</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-pythia-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-T52X8HNYE8"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-T52X8HNYE8');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="132">
+    <div class="container-fluid" id="shim"></div>
+    <div class="container-fluid" id="banner"></div>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top bd-navbar shadow" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://projectpythia.org">
+  <img src="../_static/pythia_logo-white-rtext.svg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class=" collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ProjectPythia" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/project_pythia" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" rel="noopener" target="_blank" title="YouTube">
+            <span><i class="fab fa-youtube-square"></i></span>
+            <label class="sr-only">YouTube</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    <div class="container-xl">
+      <div class="row">
+        
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../README.html">
+   Cloud Regime Cookbook
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Testing Cluster Robustness / Repeatability of Results
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="notebook-template.html">
+   Project Pythia Notebook Template
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by <a href="https://projectpythia.org">Project Pythia</a>.<br><br>
+All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code content is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons BY 4.0 (CC BY 4.0)</a>.<br><br>
+
+</div>
+
+</div>
+
+        
+
+        <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main"><div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/notebooks/simple_cluster_and_analyze.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/ProjectPythia/cookbook-template/"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/ProjectPythia/cookbook-template//issues/new?title=Issue%20on%20page%20%2Fnotebooks/simple_cluster_and_analyze.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/ProjectPythia/cookbook-template/edit/main/notebooks/simple_cluster_and_analyze.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?urlpath=lab/tree/notebooks/simple_cluster_and_analyze.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> On this page
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+          <div id="main-content" class="row">
+            <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+              
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Description</span>
+<span class="c1"># This document will open user fed data, preform clustering with either wasserstein distance or euclidean distance, and create maps of the resultant CRs. It is also possible to</span>
+<span class="c1"># feed in premade CRs to map and skip clustering. The user can select any lat/lon box, time range, and can select to only use data from over land or only over water.</span>
+<span class="c1">#%%</span>
+<span class="kn">from</span> <span class="nn">Functions</span> <span class="kn">import</span> <span class="n">plot_hists</span><span class="p">,</span> <span class="n">plot_rfo</span><span class="p">,</span> <span class="n">open_and_process</span>
+<span class="kn">import</span> <span class="nn">logging</span> <span class="k">as</span> <span class="nn">lgr</span>
+
+<span class="c1"># Path to data to cluster</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;./ISCCP_toy_data.nc&quot;</span>
+
+<span class="c1"># Path to the directory you wish to save plots in if running as a script, if None plots will only be shown and not saved. Enter as String</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">save_prefix</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># prefix to put into the name of each plot to distinguish different runs of this script</span>
+
+<span class="c1"># Variable name of data to cluster in data_path</span>
+<span class="c1"># Name of tau dimension for var_name</span>
+<span class="c1"># Name of height/pressure dimension for var_name</span>
+<span class="n">var_name</span> <span class="o">=</span>  <span class="s1">&#39;n_pctaudist&#39;</span> 
+<span class="n">tau_var_name</span> <span class="o">=</span>  <span class="s1">&#39;levtau&#39;</span> 
+<span class="n">ht_var_name</span> <span class="o">=</span>  <span class="s1">&#39;levpc&#39;</span>
+<span class="n">lat_var_name</span> <span class="o">=</span> <span class="s1">&#39;lat&#39;</span>
+<span class="n">lon_var_name</span> <span class="o">=</span> <span class="s1">&#39;lon&#39;</span>
+
+<span class="c1"># Does this dataset use cloud top height or cloud top pressure? enter &quot;h&quot; for height or &quot;p&quot; for pressure</span>
+<span class="n">height_or_pressure</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+
+<span class="c1"># If you wish to only fit data into a set of premade CRs, set this equal to a path to a numpy ndarray of premade cloud regimes of</span>
+<span class="c1"># shape=(k, n_tau_bins * n_pressure_bins). This will skip clustering and preform analysis with the premade regimes</span>
+<span class="c1"># If used, the below kmeans properties are ignored, and k is set to premade_cloud_regimes.shape[0]</span>
+<span class="c1"># Using this is different from setting init in kmeans properties to a set of CRs, as that will continue clustering using the premade </span>
+<span class="c1"># cloud regimes and update them. This will not update the cloud regimes and skips clustering entirely. It will only fit the data into these CRs</span>
+<span class="n">premade_cloud_regimes</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1">#&#39;/project/amp02/idavis/isccp_clustering/modis_and_misr/modis_testing/MODIS_emd-means_n_init5_centers_1.npy&#39;</span>
+
+<span class="c1"># kmeans properties</span>
+<span class="n">k</span><span class="o">=</span><span class="mi">6</span>   <span class="c1"># number of cluster to create</span>
+<span class="n">tol</span> <span class="o">=</span> <span class="mi">1000</span>    <span class="c1"># maximum change in inertia values between kmeans iterations to declare convergence. should be higher if using wasserstein distance</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">200</span>   <span class="c1"># maximum number of k-means iterations to preform for each initiation</span>
+<span class="n">init</span><span class="o">=</span><span class="s1">&#39;k-means++&#39;</span>    <span class="c1"># initialization technique for kmeans, can be &#39;k-means++&#39;, &#39;random&#39;, or initial clusters to use of shape (k, n_tau_bins * n_pressure_bins)</span>
+<span class="n">n_init</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c1"># number of initiations of the k-means algorithm. The final result will be the initiation with the lowest calculated inertia</span>
+<span class="n">gpu</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># If the user has an Nvidia GPU, euclidean clustering can be preformed on it for a very significant speed up. CUPY/CUML must be installed in conda environment.</span>
+
+<span class="c1"># Choose whether to use a euclidean or wasserstein distance</span>
+<span class="n">wasserstein_or_euclidean</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
+
+<span class="c1"># Minimum and Maximum longitudes and latitudes entered as list, or None for entire range</span>
+<span class="n">lat_range</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span><span class="mi">90</span><span class="p">]</span>
+<span class="n">lon_range</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">]</span>
+
+<span class="c1"># Time Range min and max, or None for all time, entered as list of str: Ex. [&quot;2003-03-01&quot;, &quot;2004-07-01&quot;] or [&#39;2003&#39;,&#39;2007&#39;]</span>
+<span class="n">time_range</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Use data only over land or over ocean</span>
+<span class="c1"># Set to &#39;L&#39; for land only, &#39;O&#39; for ocean only, or False for both land and ocean</span>
+<span class="n">only_ocean_or_land</span> <span class="o">=</span> <span class="s1">&#39;O&#39;</span>
+<span class="c1"># Does this dataset have a built in variable for land fraction? if so enter as a string, otherwise cartopy will be used to mask out land or water</span>
+<span class="n">land_frac_var_name</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Logging level, set to &quot;INFO&quot; for information about what the code is doing, otherwise keep at &quot;WARNING&quot;</span>
+<span class="n">logging_level</span> <span class="o">=</span> <span class="s1">&#39;INFO&#39;</span>
+
+
+<span class="c1"># Setting up logger</span>
+<span class="n">lgr</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+<span class="c1"># Concatenating save_path and save prefix</span>
+<span class="k">if</span> <span class="n">save_path</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span> <span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path</span> <span class="o">+</span> <span class="n">save_prefix</span>
+<span class="c1"># Opening data, and clustering</span>
+<span class="n">mat</span><span class="p">,</span> <span class="n">cluster_labels</span><span class="p">,</span> <span class="n">cluster_labels_temp</span><span class="p">,</span> <span class="n">valid_indicies</span><span class="p">,</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">open_and_process</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">n_init</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">tau_var_name</span><span class="p">,</span> <span class="n">ht_var_name</span><span class="p">,</span> <span class="n">lat_var_name</span><span class="p">,</span> <span class="n">lon_var_name</span><span class="p">,</span> <span class="n">height_or_pressure</span><span class="p">,</span> <span class="n">wasserstein_or_euclidean</span><span class="p">,</span> <span class="n">premade_cloud_regimes</span><span class="p">,</span> <span class="n">lat_range</span><span class="p">,</span> <span class="n">lon_range</span><span class="p">,</span> <span class="n">time_range</span><span class="p">,</span> <span class="n">only_ocean_or_land</span><span class="p">,</span> <span class="n">land_frac_var_name</span><span class="p">,</span> <span class="n">cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">gpu</span><span class="o">=</span><span class="n">gpu</span><span class="p">)</span>
+<span class="c1"># Plotting histograms</span>
+<span class="n">plot_hists</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">ht_var_name</span><span class="p">,</span> <span class="n">tau_var_name</span><span class="p">,</span> <span class="n">valid_indicies</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">cluster_labels_temp</span><span class="p">,</span> <span class="n">height_or_pressure</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+<span class="c1"># Plotting RFO</span>
+<span class="n">plot_rfo</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span> <span class="n">k</span> <span class="p">,</span><span class="n">ds</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wasserstein package is not installed so wasserstein distance cannot be used. Attempting to use wassertein distance will raise an error.
+To use wasserstein distance please install the wasserstein package in your environment: https://pypi.org/project/Wasserstein/ 
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Opening dataset:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Opening finished. Beginning preprocessing:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda3/envs/cookbook-dev/lib/python3.10/site-packages/cartopy/io/__init__.py:241: DownloadWarning: Downloading: https://naturalearth.s3.amazonaws.com/110m_physical/ne_110m_land.zip
+  warnings.warn(f&#39;Downloading: {url}&#39;, DownloadWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Reshaping data to shape (n_histograms, n_tau_bins* n_pc_bins):
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Reading data into memory:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Finished preprocessing:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Beginning clustering:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: 0 seconds to cluster:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+</pre></div>
+</div>
+<img alt="../_images/f4c2cd6623eb9106cb02d4fdd2b67b0ea2b44eebe7fb7e10289a8e8eea2d989a.png" src="../_images/f4c2cd6623eb9106cb02d4fdd2b67b0ea2b44eebe7fb7e10289a8e8eea2d989a.png" />
+<img alt="../_images/411de57a8d890e2afc6f3d5afb805a06325db0a6163b6c46f5098dd1062ff3fa.png" src="../_images/411de57a8d890e2afc6f3d5afb805a06325db0a6163b6c46f5098dd1062ff3fa.png" />
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </div>
+          </div>
+        </main>
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+<footer class="footer">
+  <div class="container-fluid m-0 p-0">
+  
+    <div class="footer-item">
+    
+  <div class="container-fluid footer-logos">
+    <div class="container-xl">
+      <div class="row d-flex flex-wrap align-items-center">
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="NCAR" src="../_images/NCAR-contemp-logo-blue.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="Unidata" src="../_images/Unidata_logo_horizontal_1200x300.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="UAlbany" src="../_images/UAlbany-A2-logo-purple-gold.svg" style="width: 100%">
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  
+    <div class="footer-item">
+    
+    </div>
+  
+    <div class="footer-item">
+      <div class="container-fluid footer-info">
+    <div class="container-xl">
+      <div class="d-flex justify-content-center">
+        <p class="py-1 m-0">
+            &copy;&nbsp;2023.
+        
+          By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
+        
+          Last updated on 31 July 2023.
+        </p>
+      </div>
+    </div>
+  </div>
+    </div>
+  
+    <div class="footer-item">
+    
+    </div>
+  
+  </div>
+</footer>
+  </body>
+</html>

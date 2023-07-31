@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>(Replace_with_your_title) Cookbook &#8212; Project Pythia Cookbook Template</title>
+    <title>Cloud Regime Cookbook &#8212; Cloud Regimes</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -181,13 +181,13 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav">
  <li class="toctree-l1 current">
   <a class="reference internal" href="#">
-   (Replace_with_your_title) Cookbook
+   Cloud Regime Cookbook
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Introduction
+  Testing Cluster Robustness / Repeatability of Results
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -305,13 +305,23 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#section-1-replace-with-the-title-of-this-section-e-g-foundations">
-     Section 1 ( Replace with the title of this section, e.g. “Foundations” )
+    <a class="reference internal nav-link" href="#introduction">
+     Introduction
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#section-2-replace-with-the-title-of-this-section-e-g-example-workflows">
-     Section 2 ( Replace with the title of this section, e.g. “Example workflows” )
+    <a class="reference internal nav-link" href="#choosing-a-value-of-k">
+     Choosing a Value of k
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#testing-cluster-robustness-repeatability-of-results">
+     Testing Cluster Robustness / Repeatability of Results
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mapping-cloud-regimes">
+     Mapping Cloud Regimes
     </a>
    </li>
   </ul>
@@ -345,18 +355,20 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
               <div>
                 
   <a class="reference internal image-reference" href="_images/thumbnail.png"><img alt="thumbnail" src="_images/thumbnail.png" style="width: 300px;" /></a>
-<div class="tex2jax_ignore mathjax_ignore section" id="replace-with-your-title-cookbook">
-<h1>(Replace_with_your_title) Cookbook<a class="headerlink" href="#replace-with-your-title-cookbook" title="Permalink to this headline"><i class="fas fa-link"></i></a></h1>
+<div class="tex2jax_ignore mathjax_ignore section" id="cloud-regime-cookbook">
+<h1>Cloud Regime Cookbook<a class="headerlink" href="#cloud-regime-cookbook" title="Permalink to this headline"><i class="fas fa-link"></i></a></h1>
 <p><a class="reference external" href="https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml"><img alt="nightly-build" src="https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml/badge.svg" /></a>
 <a class="reference external" href="https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks"><img alt="Binder" src="https://binder.projectpythia.org/badge_logo.svg" /></a></p>
-<p>This Project Pythia Cookbook covers … (replace <code class="docutils literal notranslate"><span class="pre">...</span></code> with the main subject of your cookbook … e.g., <em>working with radar data in Python</em>)</p>
+<p>This Project Pythia Cookbook covers creating and analyzing Cloud Regimes<br />
+&lt;!(replace <code class="docutils literal notranslate"><span class="pre">...</span></code> with the main subject of your cookbook … e.g., <em>working with radar data in Python</em>)&gt;</p>
 <div class="section" id="motivation">
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<p>The purpose of this cookbook is to lower the barrier to entry of Cloud Regime analysis. This cookbook will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, and then creates maps of the resultant Cloud regimes.</p>
 <p>(Add a few sentences stating why this cookbook will be useful. What skills will you, “the chef”, gain once you have reached the end of the cookbook?)</p>
 </div>
 <div class="section" id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p><span class="xref myst">First Author</span>, <span class="xref myst">Second Author</span>, etc. <em>Acknowledge primary content authors here</em></p>
+<p><span class="xref myst">Isaac Davis</span>, <span class="xref myst">Second Author</span>, etc. <em>Acknowledge primary content authors here</em></p>
 <div class="section" id="contributors">
 <h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
 <a href="https://github.com/ProjectPythia/cookbook-template/graphs/contributors">
@@ -367,18 +379,26 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 <div class="section" id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
 <p>(State one or more sections that will comprise the notebook. E.g., <em>This cookbook is broken up into two main sections - “Foundations” and “Example Workflows.”</em> Then, describe each section below.)</p>
-<div class="section" id="section-1-replace-with-the-title-of-this-section-e-g-foundations">
-<h3>Section 1 ( Replace with the title of this section, e.g. “Foundations” )<a class="headerlink" href="#section-1-replace-with-the-title-of-this-section-e-g-foundations" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
-<p>(Add content for this section, e.g., “The foundational content includes … “)</p>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
+<p>An introduction to the concept of Cloud Regimes and how they are used.</p>
 </div>
-<div class="section" id="section-2-replace-with-the-title-of-this-section-e-g-example-workflows">
-<h3>Section 2 ( Replace with the title of this section, e.g. “Example workflows” )<a class="headerlink" href="#section-2-replace-with-the-title-of-this-section-e-g-example-workflows" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
-<p>(Add content for this section, e.g., “Example workflows include … “)</p>
+<div class="section" id="choosing-a-value-of-k">
+<h3>Choosing a Value of k<a class="headerlink" href="#choosing-a-value-of-k" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
+<p>This section walks the user through deciding on a value of k, or the number of clusters/Cloud Regimes to create.</p>
+</div>
+<div class="section" id="testing-cluster-robustness-repeatability-of-results">
+<h3>Testing Cluster Robustness / Repeatability of Results<a class="headerlink" href="#testing-cluster-robustness-repeatability-of-results" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
+<p>How to check that results are robust and repeatable.</p>
+</div>
+<div class="section" id="mapping-cloud-regimes">
+<h3>Mapping Cloud Regimes<a class="headerlink" href="#mapping-cloud-regimes" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
+<p>Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis.</p>
 </div>
 </div>
 <div class="section" id="running-the-notebooks">
 <h2>Running the Notebooks<a class="headerlink" href="#running-the-notebooks" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>You can either run the notebook using <a class="reference external" href="https://binder.projectpythia.org/">Binder</a> or on your local machine.</p>
+<p>You can either run the notebook using <a class="reference external" href="https://binder.projectpythia.org/">Binder</a> or on your local machine. Some features will not be available on the Binder. If you wish to use your own data, a GPU with euclidean k-means, or if you wish to use Wasserstein k-means it is best to run on a local machine.</p>
 <div class="section" id="running-on-binder">
 <h3>Running on Binder<a class="headerlink" href="#running-on-binder" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
 <p>The simplest way to interact with a Jupyter Notebook is through
@@ -425,6 +445,12 @@ jupyter<span class="w"> </span>lab
 </li>
 </ol>
 </div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
@@ -505,7 +531,7 @@ jupyter<span class="w"> </span>lab
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 20 June 2023.
+          Last updated on 31 July 2023.
         </p>
       </div>
     </div>
