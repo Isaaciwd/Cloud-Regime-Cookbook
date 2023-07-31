@@ -162,7 +162,7 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
             cl = np.load(premade_cloud_regimes)
             k = len(cl)
             if cl.shape != (k,len(ds[tau_var_name]) * len(ds[ht_var_name])):
-                raise Exception (f'premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {premade_cloud_regimes.shape}, but must be shpae {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} to fit the loaded data')
+                raise Exception (f'premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {cl.shape}, but must be shpae {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} to fit the loaded data')
             cluster_labels_temp = precomputed_clusters(mat, cl, wasserstein_or_euclidean, ds, tau_var_name, ht_var_name)
             lgr.info(f' {round(perf_counter()-s)} seconds to calculate cluster_labels for premade_cloud_regimes:')
             
