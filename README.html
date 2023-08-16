@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Project Pythia Notebook Template" href="notebooks/notebook-template.html" />
+    <link rel="next" title="Introduction to Cloud Regimes" href="notebooks/Intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -187,13 +187,13 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Testing Cluster Robustness / Repeatability of Results
+  Introduction
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="notebooks/notebook-template.html">
-   Project Pythia Notebook Template
+  <a class="reference internal" href="notebooks/Intro.html">
+   Introduction to Cloud Regimes
   </a>
  </li>
 </ul>
@@ -320,8 +320,8 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mapping-cloud-regimes">
-     Mapping Cloud Regimes
+    <a class="reference internal nav-link" href="#mapping-and-analyzing-cloud-regimes">
+     Mapping and Analyzing Cloud Regimes
     </a>
    </li>
   </ul>
@@ -359,16 +359,14 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 <h1>Cloud Regime Cookbook<a class="headerlink" href="#cloud-regime-cookbook" title="Permalink to this headline"><i class="fas fa-link"></i></a></h1>
 <p><a class="reference external" href="https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml"><img alt="nightly-build" src="https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml/badge.svg" /></a>
 <a class="reference external" href="https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks"><img alt="Binder" src="https://binder.projectpythia.org/badge_logo.svg" /></a></p>
-<p>This Project Pythia Cookbook covers creating and analyzing Cloud Regimes<br />
-&lt;!(replace <code class="docutils literal notranslate"><span class="pre">...</span></code> with the main subject of your cookbook … e.g., <em>working with radar data in Python</em>)&gt;</p>
+<p>This Project Pythia Cookbook covers creating and analyzing Cloud Regimes</p>
 <div class="section" id="motivation">
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>The purpose of this cookbook is to lower the barrier to entry of Cloud Regime analysis. This cookbook will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, and then creates maps of the resultant Cloud regimes.</p>
-<p>(Add a few sentences stating why this cookbook will be useful. What skills will you, “the chef”, gain once you have reached the end of the cookbook?)</p>
+<p>The purpose of this cookbook is to lower the barrier to entry of Cloud Regime analysis. It will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, and then creates maps of the resultant Cloud regimes.</p>
 </div>
 <div class="section" id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p><span class="xref myst">Isaac Davis</span>, <span class="xref myst">Second Author</span>, etc. <em>Acknowledge primary content authors here</em></p>
+<p><span class="xref myst">Isaac Davis</span>, <span class="xref myst">Brian Medeiros</span></p>
 <div class="section" id="contributors">
 <h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
 <a href="https://github.com/ProjectPythia/cookbook-template/graphs/contributors">
@@ -378,7 +376,7 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 </div>
 <div class="section" id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>(State one or more sections that will comprise the notebook. E.g., <em>This cookbook is broken up into two main sections - “Foundations” and “Example Workflows.”</em> Then, describe each section below.)</p>
+<p>This cookbook is broken up into 4 main sections - Introduction, Choosing a Value of k, Testing Cluster Robustness / Repeatability of Results, and Mapping and Analyzing Cloud Regimes</p>
 <div class="section" id="introduction">
 <h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
 <p>An introduction to the concept of Cloud Regimes and how they are used.</p>
@@ -391,8 +389,8 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 <h3>Testing Cluster Robustness / Repeatability of Results<a class="headerlink" href="#testing-cluster-robustness-repeatability-of-results" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
 <p>How to check that results are robust and repeatable.</p>
 </div>
-<div class="section" id="mapping-cloud-regimes">
-<h3>Mapping Cloud Regimes<a class="headerlink" href="#mapping-cloud-regimes" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
+<div class="section" id="mapping-and-analyzing-cloud-regimes">
+<h3>Mapping and Analyzing Cloud Regimes<a class="headerlink" href="#mapping-and-analyzing-cloud-regimes" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
 <p>Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis.</p>
 </div>
 </div>
@@ -479,10 +477,10 @@ jupyter<span class="w"> </span>lab
               </div>
               <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="notebooks/notebook-template.html" title="next page">
+    <a class='right-next' id="next-link" href="notebooks/Intro.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Project Pythia Notebook Template</p>
+        <p class="prev-next-title">Introduction to Cloud Regimes</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -531,7 +529,7 @@ jupyter<span class="w"> </span>lab
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 31 July 2023.
+          Last updated on 16 August 2023.
         </p>
       </div>
     </div>
