@@ -3,13 +3,13 @@ root: README
 parts:
   - caption: Introduction
     chapters:
-      - file: Intro
+      - file: notebooks/Intro
   - caption: Choosing a Value of k
     chapters: 
-      - file: k_sensitivity_testing
+      - file: notebooks/k_sensitivity_testing
   - caption: Testing Cluster Robustness / Repeatability of Results
     chapters: 
-      - file: notebooks/notebook-template
+      - file: notebooks/cluster_robustness_testing
   - caption: Mapping Cloud Regimes
     chapters: 
-      - file: simple_cluster_and_analyze
+      - file: notebooks/simple_cluster_and_analyze

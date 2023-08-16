@@ -6,18 +6,14 @@
 [![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks)
 
 This Project Pythia Cookbook covers creating and analyzing Cloud Regimes   
-<!(replace `...` with the main subject of your cookbook ... e.g., _working with radar data in Python_)>
 
 ## Motivation
 
-The purpose of this cookbook is to lower the barrier to entry of Cloud Regime analysis. This cookbook will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, and then creates maps of the resultant Cloud regimes.  
-
-(Add a few sentences stating why this cookbook will be useful. What skills will you, "the chef", gain once you have reached the end of the cookbook?)
+The purpose of this cookbook is to lower the barrier to entry of Cloud Regime analysis. It will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, and then creates maps of the resultant Cloud regimes.  
 
 ## Authors
 
-[Isaac Davis](@first-author), [Second Author](@second-author), etc. _Acknowledge primary content authors here_
-
+[Isaac Davis](@first-author), [Brian Medeiros](@second-author)
 ### Contributors
 
 <a href="https://github.com/ProjectPythia/cookbook-template/graphs/contributors">
@@ -26,7 +22,8 @@ The purpose of this cookbook is to lower the barrier to entry of Cloud Regime an
 
 ## Structure
 
-(State one or more sections that will comprise the notebook. E.g., _This cookbook is broken up into two main sections - "Foundations" and "Example Workflows."_ Then, describe each section below.)
+This cookbook is broken up into 4 main sections - Introduction, Choosing a Value of k, Testing Cluster Robustness / Repeatability of Results, and Mapping and Analyzing Cloud Regimes 
+
 
 ### Introduction
 
@@ -40,10 +37,9 @@ This section walks the user through deciding on a value of k, or the number of c
 
 How to check that results are robust and repeatable.
 
-### Mapping Cloud Regimes 
+### Mapping and Analyzing Cloud Regimes 
+
 Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis.
-
-
 
 ## Running the Notebooks
 
