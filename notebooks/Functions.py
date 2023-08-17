@@ -162,7 +162,9 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
             cl = np.load(premade_cloud_regimes)
             k = len(cl)
             if cl.shape != (k,len(ds[tau_var_name]) * len(ds[ht_var_name])):
-                raise Exception (f'premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {cl.shape}, but must be shpae {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} to fit the loaded data')
+                raise Exception (f"""premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {cl.shape}, but must be shpae {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} 
+                to fit the loaded data. This shape mismatch often happens when fitting model data into CRs made from observation. Many of the satelight simulators include extra tau or cloud top pressure/height 
+                bins that do not exist in the observation data: you may need to sum these extra bins together to remove them.""")
             cluster_labels_temp = precomputed_clusters(mat, cl, wasserstein_or_euclidean, ds, tau_var_name, ht_var_name)
             lgr.info(f' {round(perf_counter()-s)} seconds to calculate cluster_labels for premade_cloud_regimes:')
             
@@ -729,8 +731,8 @@ def histogram_cor(cl, save_path):
     # plt.clf()
     plt.show()
 
-    if np.max(cor_coefs[np.triu_indices(MxClusters, k=1)]) > 0.8:
-        print(f'k = {MxClusters} failed the histogram correlation test. The maximum alowable correlation is 0.8, but the maximum correlation is {round(np.max(cor_coefs[np.triu_indices(MxClusters, k=1)]),2)}')
+    # if np.max(cor_coefs[np.triu_indices(MxClusters, k=1)]) > 0.8:
+    #     print(f'k = {MxClusters} failed the histogram correlation test. The maximum alowable correlation is 0.8, but the maximum correlation is {round(np.max(cor_coefs[np.triu_indices(MxClusters, k=1)]),2)}')
     
     if save_path != None:
         plt.savefig(save_path + f'{MxClusters}k_histogram_correlations.png')
@@ -775,7 +777,7 @@ def spacial_cor(cluster_labels_temp, k, save_path):
     plt.xticks(ticks = positions+0.3, labels = ticklabels)
     plt.yticks(ticks = positions+0.3, labels = ticklabels)
 
-    plt.title(f"Spacial Correlation Matrices of WSs, K = {k}")
+    plt.title(f"Space-Time Correlation Matrices of WSs, K = {k}")
    
     if save_path != None:
         plt.savefig(save_path + f'{k}k_space_time_correlation_matrix.png')

@@ -12,4 +12,4 @@ parts:
       - file: notebooks/cluster_robustness_testing
   - caption: Mapping Cloud Regimes
     chapters: 
-      - file: notebooks/simple_cluster_and_analyze
+      - file: notebooks/plot_and_analyze
