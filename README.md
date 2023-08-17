@@ -3,7 +3,7 @@
 # Cloud Regime Cookbook
 
 [![nightly-build](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/ProjectPythia/cookbook-template/actions/workflows/nightly-build.yaml)
-[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/ProjectPythia/cookbook-template/main?labpath=notebooks)
+[![Binder](https://binder.projectpythia.org/badge_logo.svg)](https://binder.projectpythia.org/v2/gh/Isaaciwd/Cloud-Regime-Cookbook/main?labpath=notebooks)
 
 This Project Pythia Cookbook covers creating and analyzing Cloud Regimes   
 
