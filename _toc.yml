@@ -10,6 +10,6 @@ parts:
   - caption: Testing Cluster Robustness / Repeatability of Results
     chapters: 
       - file: notebooks/cluster_robustness_testing
-  - caption: Mapping Cloud Regimes
+  - caption: Mapping and Analyzing Cloud Regimes
     chapters: 
       - file: notebooks/plot_and_analyze
