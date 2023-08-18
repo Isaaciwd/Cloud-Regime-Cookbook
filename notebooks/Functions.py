@@ -93,22 +93,28 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
             else: raise Exception('Invalid option for only_ocean_or_land: Please enter "O" for ocean only, "L" for land only, or set to False for both land and water')
         
     # Selecting lat range
-    if lat_range != None:
-        if ds[lat_var_name][0] > ds[lat_var_name][-1]:
-            lat_selection = {lat_var_name:slice(lat_range[1],lat_range[0])}
-            ds = ds.sel(lat_selection)
-        else:
-            lat_selection = {lat_var_name:slice(lat_range[0],lat_range[1])}
-            ds = ds.sel(lat_selection)
+    if lat_range is not None:
+        lat_selection = {lat_var_name:slice(np.min(lat_range),np.max(lat_range))}
+        ds = ds.sel(lat_selection)
+    # if lat_range != None:
+    #     if ds[lat_var_name][0] > ds[lat_var_name][-1]:
+    #         lat_selection = {lat_var_name:slice(lat_range[1],lat_range[0])}
+    #         ds = ds.sel(lat_selection)
+    #     else:
+    #         lat_selection = {lat_var_name:slice(lat_range[0],lat_range[1])}
+    #         ds = ds.sel(lat_selection)
 
     # Selecting Lon range
-    if lon_range != None:
-        if ds[lon_var_name][0] > ds[lon_var_name][-1]:
-            lon_selection = {lon_var_name:slice(lon_range[1],lon_range[0])}
-            ds = ds.sel(lon_selection)
-        else:
-            lon_selection = {lon_var_name:slice(lon_range[0],lon_range[1])}
-            ds = ds.sel(lon_selection)
+    if lon_range is not None:
+        lon_selection = {lon_var_name:slice(np.min(lon_range),np.max(lon_range))}
+        ds = ds.sel(lon_selection)
+    # if lon_range != None:
+    #     if ds[lon_var_name][0] > ds[lon_var_name][-1]:
+    #         lon_selection = {lon_var_name:slice(lon_range[1],lon_range[0])}
+    #         ds = ds.sel(lon_selection)
+    #     else:
+    #         lon_selection = {lon_var_name:slice(lon_range[0],lon_range[1])}
+    #         ds = ds.sel(lon_selection)
 
     # Selecting time range
     if time_range != None:
@@ -116,10 +122,10 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
 
     # Selecting only valid tau and height/pressure range
     # Many data products have a -1 bin for failed retreivals, we do not wish to include this
-    tau_selection = {tau_var_name:slice(0,9999999999999)}
+    tau_selection = {tau_var_name:slice(0,None)}
     # Making sure this works for pressure which is ordered largest to smallest and altitude which is ordered smallest to largest
-    if ds[ht_var_name][0] > ds[ht_var_name][-1]: ht_selection = {ht_var_name:slice(9999999999999,0)}
-    else: ht_selection = {ht_var_name:slice(0,9999999999999)}
+    if ds[ht_var_name][0] > ds[ht_var_name][-1]: ht_selection = {ht_var_name:slice(None,0)}
+    else: ht_selection = {ht_var_name:slice(0,None)}
     ds = ds.sel(tau_selection)
     ds = ds.sel(ht_selection)
 
@@ -144,7 +150,7 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
     weights=weights[valid_indicies]
 
     # Safetey check that shouldnt really be necesary
-    if np.min(mat < 0):
+    if np.any(mat < 0):
         raise Exception (f'Found negative value in ds.{var_name}, if this is a fill value for missing data, convert to nans and try again')
     
     # If cluster is not true, then skip clustering and just return the oopened and preprocessed data
@@ -156,10 +162,11 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
     # If the function call sepecifies to cluster/calcuate cluster labels, then do it
     else:
         # Use premade clusters to calculate cluster labels (using specified distance metric) if they have been provided
-        if type(premade_cloud_regimes) == str:
+        if isinstance(premade_cloud_regimes, str):
             lgr.info(' Calculating cluster_labels for premade_cloud_regimes:')
             s = perf_counter()
-            cl = np.load(premade_cloud_regimes)
+            try: cl = np.load(premade_cloud_regimes)
+            except: cl = xr.open_datarray(premade_cloud_regimes).values
             k = len(cl)
             if cl.shape != (k,len(ds[tau_var_name]) * len(ds[ht_var_name])):
                 raise Exception (f"""premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {cl.shape}, but must be shpae {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} 
@@ -741,7 +748,7 @@ def histogram_cor(cl, save_path):
     plt.close()
 
 # Create correlation matricies between the spatial distribution of all cloud regimes
-def spacial_cor(cluster_labels_temp, k, save_path):
+def spatial_cor(cluster_labels_temp, k, save_path):
 
     # Making one hot array shape (k,num_observations) where the observation = a cluster
     all_rfo = np.zeros((k,len(cluster_labels_temp)))
@@ -822,7 +829,7 @@ def spacial_cor(cluster_labels_temp, k, save_path):
     # plt.xticks(ticks = positions+0.3, labels = ticklabels)
     # plt.yticks(ticks = positions+0.3, labels = ticklabels)
 
-    # plt.title(f"Spacial Correlation Matrices of WSs, K = {k}")
+    # plt.title(f"Spatial Correlation Matrices of WSs, K = {k}")
 
     # plt.show()
 
