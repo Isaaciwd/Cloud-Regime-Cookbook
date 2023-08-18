@@ -352,6 +352,11 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#opening-and-proprocessing-data">
+   Opening and Proprocessing Data
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#clustering-and-checking-results">
    Clustering and Checking Results
   </a>
@@ -426,7 +431,7 @@ To use wasserstein distance please install the wasserstein package in your envir
 <span class="c1"># kmeans properties</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">4</span>   <span class="c1"># number of cluster to create</span>
 <span class="n">tol</span> <span class="o">=</span> <span class="mf">0.001</span>   <span class="c1"># maximum change in inertia values between kmeans iterations to declare convergence. should be higher if using wasserstein distance</span>
-<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">300</span>   <span class="c1"># maximum number of k-means iterations to preform for each initiation</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">100</span>   <span class="c1"># maximum number of k-means iterations to preform for each initiation</span>
 <span class="n">init</span> <span class="o">=</span> <span class="s1">&#39;k-means++&#39;</span>    <span class="c1"># initialization technique for kmeans, can be &#39;k-means++&#39;, &#39;random&#39;, or initial clusters to use of shape (k, n_tau_bins * n_pressure_bins)</span>
 <span class="n">n_init</span> <span class="o">=</span> <span class="mi">10</span>    <span class="c1"># number of initiations of the k-means algorithm. The final result will be the initiation with the lowest calculated inertia</span>
 <span class="n">gpu</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># If the user has an Nvidia GPU, euclidean clustering can br preformed on it for a very significant speed up. CUPY/CUML must be installed in conda environment.</span>
@@ -454,8 +459,16 @@ To use wasserstein distance please install the wasserstein package in your envir
 <span class="n">only_ocean_or_land</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="c1"># Does this dataset have a built in variable for land fraction? if so enter variable name as a string, otherwise cartopy will be used to mask out land or water</span>
 <span class="n">land_frac_var_name</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="c1"># Logging level, set to &quot;INFO&quot; for information about what the code is doing, otherwise keep at &quot;WARNING&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="opening-and-proprocessing-data">
+<h2>Opening and Proprocessing Data<a class="headerlink" href="#opening-and-proprocessing-data" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Logging level, set to &quot;INFO&quot; for information about what the code is doing, otherwise keep at &quot;WARNING&quot;</span>
 <span class="n">logging_level</span> <span class="o">=</span> <span class="s1">&#39;INFO&#39;</span>
 
 <span class="c1"># Setting up logger</span>
@@ -544,7 +557,7 @@ To use wasserstein distance please install the wasserstein package in your envir
 </div>
 </div>
 </div>
-<p>Once you’re happy with the results and are confident the k-means setup is robust, run the next cell to save the clustering results from the last trial to use in the next step: plotting and Analyzing.</p>
+<p>Once you’re happy with the results and are confident the k-means setup is robust, run the next cell to save the clustering results from the last trial, and open the next file plot_and_analyze.ipynb.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;./toy_ISCCP_cluster_centers.npy&quot;</span><span class="p">,</span> <span class="n">cl_trials</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -637,7 +650,7 @@ To use wasserstein distance please install the wasserstein package in your envir
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 17 August 2023.
+          Last updated on 18 August 2023.
         </p>
       </div>
     </div>

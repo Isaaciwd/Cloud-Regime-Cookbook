@@ -419,7 +419,7 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
-<span class="kn">from</span> <span class="nn">Functions</span> <span class="kn">import</span> <span class="n">emd_means</span><span class="p">,</span> <span class="n">euclidean_kmeans</span><span class="p">,</span> <span class="n">plot_hists</span><span class="p">,</span> <span class="n">plot_rfo</span><span class="p">,</span> <span class="n">histogram_cor</span><span class="p">,</span> <span class="n">spacial_cor</span><span class="p">,</span> <span class="n">open_and_process</span><span class="p">,</span> <span class="n">kp1_histogram_cor</span>
+<span class="kn">from</span> <span class="nn">Functions</span> <span class="kn">import</span> <span class="n">emd_means</span><span class="p">,</span> <span class="n">euclidean_kmeans</span><span class="p">,</span> <span class="n">plot_hists</span><span class="p">,</span> <span class="n">plot_rfo</span><span class="p">,</span> <span class="n">histogram_cor</span><span class="p">,</span> <span class="n">spatial_cor</span><span class="p">,</span> <span class="n">open_and_process</span><span class="p">,</span> <span class="n">kp1_histogram_cor</span>
 <span class="kn">import</span> <span class="nn">logging</span> <span class="k">as</span> <span class="nn">lgr</span>
 <span class="kn">import</span> <span class="nn">dask</span>
 </pre></div>
@@ -462,7 +462,7 @@ To use wasserstein distance please install the wasserstein package in your envir
 <span class="n">tol</span> <span class="o">=</span> <span class="mf">0.001</span>   <span class="c1"># maximum change in inertia values between kmeans iterations to declare convergence. should be higher if using wasserstein distance</span>
 <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">100</span>   <span class="c1"># maximum number of k-means iterations to preform for each initiation</span>
 <span class="n">init</span><span class="o">=</span><span class="s1">&#39;k-means++&#39;</span>    <span class="c1"># initialization technique for kmeans, can be &#39;k-means++&#39;, &#39;random&#39;, or initial clusters to use of shape (k, n_tau_bins * n_pressure_bins)</span>
-<span class="n">n_init</span> <span class="o">=</span> <span class="mi">100</span>   <span class="c1"># number of initiations of the k-means algorithm. The final result will be the initiation with the lowest calculated inertia</span>
+<span class="n">n_init</span> <span class="o">=</span> <span class="mi">10</span>   <span class="c1"># number of initiations of the k-means algorithm. The final result will be the initiation with the lowest calculated inertia</span>
 <span class="n">gpu</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># If the user has an Nvidia GPU, euclidean clustering can br preformed on it for a very significant speed up. CUPY/CUML must be installed in conda environment.</span>
 
 <span class="c1"># k sensitivity testing properties</span>
@@ -558,7 +558,7 @@ To use wasserstein distance please install the wasserstein package in your envir
 
     <span class="c1"># Plotting correlation matrices</span>
     <span class="n">histogram_cor</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
-    <span class="n">spacial_cor</span><span class="p">(</span><span class="n">cluster_labels_temp</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+    <span class="n">spatial_cor</span><span class="p">(</span><span class="n">cluster_labels_temp</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
     
     <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="n">kp1_histogram_cor</span><span class="p">(</span><span class="n">cl_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cl_list</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">save_path</span><span class="p">)</span>
 
@@ -574,45 +574,45 @@ To use wasserstein distance please install the wasserstein package in your envir
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
 </pre></div>
 </div>
-<img alt="../_images/257c812fe81f109dac7348c104f23bb654f92ab7a6af592248392e689d3b2120.png" src="../_images/257c812fe81f109dac7348c104f23bb654f92ab7a6af592248392e689d3b2120.png" />
+<img alt="../_images/d4eb21937254e44fb9071a2fb72ba952a7c9843d97a3a4e8e9f20d336540a206.png" src="../_images/d4eb21937254e44fb9071a2fb72ba952a7c9843d97a3a4e8e9f20d336540a206.png" />
 <img alt="../_images/e0fb7783560a943ef8c615bd8652c1b25920c90ec6ee164d6a71ef7afb859a55.png" src="../_images/e0fb7783560a943ef8c615bd8652c1b25920c90ec6ee164d6a71ef7afb859a55.png" />
-<img alt="../_images/9b9ade9188054c5bc34a82feb38f80e8a6cfcd17121b50a0158a6469bd8efef0.png" src="../_images/9b9ade9188054c5bc34a82feb38f80e8a6cfcd17121b50a0158a6469bd8efef0.png" />
+<img alt="../_images/3854a2fe69231e35dda7d81414e3a7059caa2bd8ac1e7c58c3cfc651319b5be0.png" src="../_images/3854a2fe69231e35dda7d81414e3a7059caa2bd8ac1e7c58c3cfc651319b5be0.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda3/envs/cookbook-dev/lib/python3.10/site-packages/cartopy/io/__init__.py:241: DownloadWarning: Downloading: https://naturalearth.s3.amazonaws.com/110m_physical/ne_110m_coastline.zip
   warnings.warn(f&#39;Downloading: {url}&#39;, DownloadWarning)
 </pre></div>
 </div>
-<img alt="../_images/c24276fcccf29282282bed5d15be4484360da72543c1deba4ee9faf18a201a44.png" src="../_images/c24276fcccf29282282bed5d15be4484360da72543c1deba4ee9faf18a201a44.png" />
+<img alt="../_images/0bf0619a3cba4fb22efc1768cbf26d638bfa3a12a4ce408a3443e3f3b63c3253.png" src="../_images/0bf0619a3cba4fb22efc1768cbf26d638bfa3a12a4ce408a3443e3f3b63c3253.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
 </pre></div>
 </div>
-<img alt="../_images/d6acee7c83215485c575a3a0a01e68e4df4a05aa87567b9874d592ab01643708.png" src="../_images/d6acee7c83215485c575a3a0a01e68e4df4a05aa87567b9874d592ab01643708.png" />
-<img alt="../_images/9640c2620f2e068031dce27430b5930651f5f92fa9801aa8ccc0657b403d7d73.png" src="../_images/9640c2620f2e068031dce27430b5930651f5f92fa9801aa8ccc0657b403d7d73.png" />
-<img alt="../_images/9cae061ec7181d6251c325590ee1de728868c2f5a027e2fe65d0208cdc09a9dc.png" src="../_images/9cae061ec7181d6251c325590ee1de728868c2f5a027e2fe65d0208cdc09a9dc.png" />
-<img alt="../_images/213f3248de6e3cda5c2450432de1ea79e1fcd0dc2dea6a14cb2bbc71549db6b9.png" src="../_images/213f3248de6e3cda5c2450432de1ea79e1fcd0dc2dea6a14cb2bbc71549db6b9.png" />
-<img alt="../_images/bb2fa5f019d0617545ed47a0d08a09beec1c3100bc26df4624fa7c31bbd79b27.png" src="../_images/bb2fa5f019d0617545ed47a0d08a09beec1c3100bc26df4624fa7c31bbd79b27.png" />
+<img alt="../_images/337909610e14f5d74a5982d67c31caa4ffeee5d959f2a1133c3bf07171a601e1.png" src="../_images/337909610e14f5d74a5982d67c31caa4ffeee5d959f2a1133c3bf07171a601e1.png" />
+<img alt="../_images/71d85cc545e8b14f330e7aa194247391f84ba36e8a1870c601ccde87dec83010.png" src="../_images/71d85cc545e8b14f330e7aa194247391f84ba36e8a1870c601ccde87dec83010.png" />
+<img alt="../_images/603ae9fff7e70b2fbafa6383fcd42368aaca1a01e490d281c694d215d1bbf5a1.png" src="../_images/603ae9fff7e70b2fbafa6383fcd42368aaca1a01e490d281c694d215d1bbf5a1.png" />
+<img alt="../_images/b4bce040762efc6a5ebfd0c6196a8077be6836e809bab3370eec4b9813034d09.png" src="../_images/b4bce040762efc6a5ebfd0c6196a8077be6836e809bab3370eec4b9813034d09.png" />
+<img alt="../_images/dce7618bdde2d07e279d54ffa1776004c5570d119f57161cc6772621fe6c339a.png" src="../_images/dce7618bdde2d07e279d54ffa1776004c5570d119f57161cc6772621fe6c339a.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
 </pre></div>
 </div>
-<img alt="../_images/0d7282866da9e2058f0595b0c8c0f59d95f7461091bc4777a92583892b302810.png" src="../_images/0d7282866da9e2058f0595b0c8c0f59d95f7461091bc4777a92583892b302810.png" />
-<img alt="../_images/1f2c3d580c0757ab13d97f5a71b850bc4e364db84e94f28995d3a71287aea2f8.png" src="../_images/1f2c3d580c0757ab13d97f5a71b850bc4e364db84e94f28995d3a71287aea2f8.png" />
-<img alt="../_images/82c3bc2902199200046563c05ba122966cf8e7bba576322179ed9cdd52ad58c0.png" src="../_images/82c3bc2902199200046563c05ba122966cf8e7bba576322179ed9cdd52ad58c0.png" />
-<img alt="../_images/1282e7e33546b7556e7808a9e05e6a498d591e788d05d6336add1ee91ce6ce59.png" src="../_images/1282e7e33546b7556e7808a9e05e6a498d591e788d05d6336add1ee91ce6ce59.png" />
-<img alt="../_images/310c0a30c8237e8ad807a1830fd7ec22477173c8c8fe7ce7a4b74ab86f9156ae.png" src="../_images/310c0a30c8237e8ad807a1830fd7ec22477173c8c8fe7ce7a4b74ab86f9156ae.png" />
+<img alt="../_images/389b1324076eb75db613e9a46fc2c662bc25dbad49568c13e1a341e48028b275.png" src="../_images/389b1324076eb75db613e9a46fc2c662bc25dbad49568c13e1a341e48028b275.png" />
+<img alt="../_images/c6da5d821b8093d3b24946d478bdbbb46ddec123749464123a569dd733a9e8b4.png" src="../_images/c6da5d821b8093d3b24946d478bdbbb46ddec123749464123a569dd733a9e8b4.png" />
+<img alt="../_images/b04f5705ad75d0353a30f9b3267044ea69f2326e5c1d839050a116007e747e96.png" src="../_images/b04f5705ad75d0353a30f9b3267044ea69f2326e5c1d839050a116007e747e96.png" />
+<img alt="../_images/7678d26a247475e94257508c8074df521b684199e0aa8928ac51f5157f42eb8b.png" src="../_images/7678d26a247475e94257508c8074df521b684199e0aa8928ac51f5157f42eb8b.png" />
+<img alt="../_images/0e95de649e8f44b1b1e7cb4f56959fdb082959e6811856950e7e635ce5762fdc.png" src="../_images/0e95de649e8f44b1b1e7cb4f56959fdb082959e6811856950e7e635ce5762fdc.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
 </pre></div>
 </div>
-<img alt="../_images/52e572608d145f98bc72d86258c879094320f37ec0b33b30fc466edda01120c5.png" src="../_images/52e572608d145f98bc72d86258c879094320f37ec0b33b30fc466edda01120c5.png" />
-<img alt="../_images/2bba97faea9226d091d2275911bfd8419cc1f46ce4afbaefac0a2537c4a66f76.png" src="../_images/2bba97faea9226d091d2275911bfd8419cc1f46ce4afbaefac0a2537c4a66f76.png" />
-<img alt="../_images/ccc4a6cad3dcde7c0a15f6cb478311b456a17ee2af5093b61580b91aea5b79c6.png" src="../_images/ccc4a6cad3dcde7c0a15f6cb478311b456a17ee2af5093b61580b91aea5b79c6.png" />
-<img alt="../_images/857dba678a89c2458836ca2a2a8d902181f373bf21a7d78b9f7f7b6e40ba3d34.png" src="../_images/857dba678a89c2458836ca2a2a8d902181f373bf21a7d78b9f7f7b6e40ba3d34.png" />
-<img alt="../_images/5f934ac9b2f47b225227672a7202ae668675847080644c74f780a5150a004acb.png" src="../_images/5f934ac9b2f47b225227672a7202ae668675847080644c74f780a5150a004acb.png" />
+<img alt="../_images/4eed54195e856fab79d2abdeca30b8be862cfe814d3de5c2d796a9bdc2283b0e.png" src="../_images/4eed54195e856fab79d2abdeca30b8be862cfe814d3de5c2d796a9bdc2283b0e.png" />
+<img alt="../_images/fbff061ab3c846398e4c9a85ad5126818320f418edea2329f2a908044baacd80.png" src="../_images/fbff061ab3c846398e4c9a85ad5126818320f418edea2329f2a908044baacd80.png" />
+<img alt="../_images/9a883f25464ee87434bd0648e884597d82b08367c72ef7a813b9c28169dd2e7e.png" src="../_images/9a883f25464ee87434bd0648e884597d82b08367c72ef7a813b9c28169dd2e7e.png" />
+<img alt="../_images/ef5cc4053a6216a8eeefc5af4b3390f19cd748f12ef52d0a3168cc24f1b578a7.png" src="../_images/ef5cc4053a6216a8eeefc5af4b3390f19cd748f12ef52d0a3168cc24f1b578a7.png" />
+<img alt="../_images/9ba763e2263bb03d0452de9bd4648aa5f6e4a5e75be2078ec1694f442b9da27a.png" src="../_images/9ba763e2263bb03d0452de9bd4648aa5f6e4a5e75be2078ec1694f442b9da27a.png" />
 </div>
 </div>
 <p>For the ISCCP toy data included in this cookbook, which includes only two years of monthly data from 30N to 30S, we see at k=2 it is initially seperated into essentially a low cloud and high cloud CR. Increasing k to 3 breaks up the low cloud CR into a thicker stratocumulus regime, and a thinner more general shollow convection regime. Increasing once again to K=4 breaks up the high cloud CR into a deep convection and a more general high cloud/cirrus CR. At k=5 our general low cloud/shallow convection CR splits once again, however this time, the split is highly correlated with other cloud regimes created in k=5. So here, I’d say that k=4 is the most ideal.</p>
 <hr class="docutils" />
 <div class="section" id="whats-next">
 <h3>What’s next?<a class="headerlink" href="#whats-next" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
-<p>Next we’ll test how robust our k-means setup is, and make sure we can repeat the results of this clustering.</p>
+<p>Next we’ll test how robust our k-means setup is, and make sure we can repeat the results of this clustering. To do this, select the file called cluster_robustness_testing.ipynb.</p>
 </div>
 </div>
 </div>
@@ -699,7 +699,7 @@ To use wasserstein distance please install the wasserstein package in your envir
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 17 August 2023.
+          Last updated on 18 August 2023.
         </p>
       </div>
     </div>

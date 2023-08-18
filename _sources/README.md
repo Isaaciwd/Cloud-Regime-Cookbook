@@ -9,7 +9,7 @@ This Project Pythia Cookbook covers creating and analyzing Cloud Regimes
 
 ## Motivation
 
-The purpose of this cookbook is to lower the barrier to entry of Cloud Regime analysis. It will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, and then creates maps of the resultant Cloud regimes.  
+The purpose of this cookbook is to lower the barrier to entry of Cloud Regime (CR) analysis. It will give the user the tools and instruction to create a set of Cloud regimes from their own data using k-means clustering with either wasserstein or euclidean distance. It walks the user through deciding on the number of cloud regimes to create, testing if their k-means setup is robust, creates maps of the resultant CRs, and shows the user how to investigate any variable they might wish in association with the occurrence of the CRs.  
 
 ## Authors
 
