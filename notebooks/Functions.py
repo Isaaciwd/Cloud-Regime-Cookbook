@@ -169,9 +169,11 @@ def open_and_process(data_path, k, tol, max_iter, init, n_init, var_name, tau_va
             except: cl = xr.open_datarray(premade_cloud_regimes).values
             k = len(cl)
             if cl.shape != (k,len(ds[tau_var_name]) * len(ds[ht_var_name])):
-                raise Exception (f"""premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {cl.shape}, but must be shpae {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} 
-                to fit the loaded data. This shape mismatch often happens when fitting model data into CRs made from observation. Many of the satelight simulators include extra tau or cloud top pressure/height 
-                bins that do not exist in the observation data: you may need to sum these extra bins together to remove them.""")
+                raise Exception (f"""premade_cloud_regimes is the wrong shape. premade_cloud_regimes.shape = {cl.shape}, but must be shape {(k,len(ds.tau_var_name) * len(ds.ht_var_name))} 
+                to fit the loaded data. This shape mismatch often happens when fitting model data into CRs made from observation. Many of the satellite simulators include extra tau or cloud top pressure/height 
+                bins that do not exist in the observation data: you may need to sum these extra bins together to remove them. Additionally, some observation datasets
+                have additional tau or height/pressure bins (often labeled with values of -1) to indicate failed retrievals. It is important to trim off these extra bins before creating CRs
+                or fitting into CRs made by other data.""")
             cluster_labels_temp = precomputed_clusters(mat, cl, wasserstein_or_euclidean, ds, tau_var_name, ht_var_name)
             lgr.info(f' {round(perf_counter()-s)} seconds to calculate cluster_labels for premade_cloud_regimes:')
             
