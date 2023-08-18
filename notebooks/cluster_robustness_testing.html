@@ -377,10 +377,9 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 <hr class="docutils" />
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>K-means is initiated using a random process, and therefore can give different answers based on the random initiation. It is important we make sure our k-means setup is robust, and returns very similar results every time. K-means not returning thsimilar results can be indicative of a few things. It can often be a symptom of the value of k being too small, or it can mean that n_init is not high enough. The n_init variable is how many times k-means clustering is preformed for each call of the k-means function. The initiation with the best final result (most compact clusters) will be chosen as the final output. The larger n_init is the longer the computation time but the more robust the final output is.
-i
-In previous works (<a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/26/19/jcli-d-13-00024.1.xml">Tselioudis et al. 2013</a>) have tested for a robust k-means setup by preforming the clustering three times for the final k and checking that the correlations between the cluster centers is &gt; 0.8.</p>
-<p>This script will preform kmeans clustering n_trials times, and test if correlations between the cluster centers is &gt; correlation_limit, where n_trials and correlation_limit are user defined variables. Feel free to start with n_trials=3 and correlation_limit=0.8, but if computation power allows it may be worth experimenting with more rigourous requirements.</p>
+<p>K-means is initiated using a random process, and therefore can give different answers based on the random initiation. It is important we make sure our k-means setup is robust and returns very similar results every time. K-means returning inconsistent results can be indicative of a few things. It can often be a symptom of the value of k being too small, or it can mean that n_init is not high enough. The n_init variable is how many times k-means clustering is performed for each call of the k-means function. The initiation with the best final result (most compact clusters) will be chosen as the final output. The larger n_init is the longer the computation time but the more robust the final output is. When utilizing Wasserstein distance, it could also be a symptom of tol being too large. I mentioned earlier that tol will likely need to be increased by quite a few orders of magnitude when using Wasserstein distance. You may need to play with this parameter with your data to find a value that can deliver consistent results, and still is able to compute in a reasonable amount of time.</p>
+<p>In previous works (<a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/26/19/jcli-d-13-00024.1.xml">Tselioudis et al. 2013</a>) have tested for a robust k-means setup by preforming the clustering three times for the final k and checking that the correlations between the cluster centers is &gt; 0.8.</p>
+<p>This script will perform k-means clustering n_trials times, and test if correlations between the cluster centers is &gt; correlation_limit, where n_trials and correlation_limit are user defined variables. Feel free to start with n_trials=3 and correlation_limit=0.8, but if computation power allows it may be worth experimenting with more rigorous requirements.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="imports">
@@ -405,8 +404,8 @@ To use wasserstein distance please install the wasserstein package in your envir
 </div>
 <div class="section" id="defining-variables-and-opening-data">
 <h2>Defining Variables and Opening Data<a class="headerlink" href="#defining-variables-and-opening-data" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>Here we define the variables necesary to begin using the toy ISCCP dataset included with this cookbook. To start off leave these variables alone, but later on feel free to experiment and change n_trials and correlation_limit. Also free to mess around with the k-means properties. Try increasing tol or decreasing n_init, try an innapropriate value of k or random initiation vs k-means++. Change plot_cr_centers or plot_rfo_graphs to true to plot the clustering results from each trial and examine how similar they are. It is also worth noting that just because a k-means setup is robust for the relatively small ISCCP dataset we’re using, does not mean it will be robust for much larger datasets.</p>
-<p>If running locally with your own dataset, you will need to change these to match your data.</p>
+<p>Here we define the variables necessary to begin using the toy ISCCP dataset included with this cookbook. To start off leave these variables alone, but later on feel free to experiment and change n_trials and correlation_limit. Also, free to mess around with the k-means properties. Try increasing tol or decreasing n_init, try an inappropriate value of k, or random initiations versus k-means++ initiation. What k-means properties result in inconsistent results? Change plot_cr_centers and/or plot_rfo_maps to true to plot the clustering results from each trial and examine how similar they are. It is also worth noting that just because a k-means setup is robust for the relatively small ISCCP dataset we’re using, does not mean it will be robust for much larger datasets.</p>
+<p>If running locally with your own dataset, you will need to change many of variables these to match and point towards your data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Path to data to cluster</span>
@@ -442,7 +441,7 @@ To use wasserstein distance please install the wasserstein package in your envir
 
 <span class="c1"># Want to see the results of clustering for each trial? Set one or both of these to true. </span>
 <span class="n">plot_cr_centers</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">plot_rfo_graphs</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">plot_rfo_maps</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="c1"># Choose whether to use a euclidean or wasserstein distance kmeans algorithm</span>
 <span class="n">wasserstein_or_euclidean</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
@@ -519,7 +518,7 @@ To use wasserstein distance please install the wasserstein package in your envir
         <span class="n">cl_trials</span><span class="p">[</span><span class="n">trial</span><span class="p">],</span> <span class="n">cluster_labels_temp</span> <span class="o">=</span> <span class="n">euclidean_kmeans</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">n_init</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">gpu</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">Exception</span> <span class="p">(</span><span class="s1">&#39;Invalid option for wasserstein_or_euclidean. Please enter &quot;wasserstein&quot;, &quot;euclidean&quot;&#39;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">plot_cr_centers</span> <span class="ow">or</span> <span class="n">plot_rfo_graphs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">plot_cr_centers</span> <span class="ow">or</span> <span class="n">plot_rfo_maps</span><span class="p">:</span>
         <span class="c1"># Reshaping cluster_labels_temp to original shape of ds and reinserting NaNs in the original places, so plot can be made if needed</span>
         <span class="n">cluster_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">histograms</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
         <span class="n">cluster_labels</span><span class="p">[</span><span class="n">valid_indicies</span><span class="p">]</span><span class="o">=</span><span class="n">cluster_labels_temp</span>
@@ -529,7 +528,7 @@ To use wasserstein distance please install the wasserstein package in your envir
         <span class="k">if</span> <span class="n">plot_cr_centers</span><span class="p">:</span>
             <span class="n">plot_hists</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">ht_var_name</span><span class="p">,</span> <span class="n">tau_var_name</span><span class="p">,</span> <span class="n">valid_indicies</span><span class="p">,</span> <span class="n">mat</span><span class="p">,</span> <span class="n">cluster_labels_temp</span><span class="p">,</span> <span class="n">height_or_pressure</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">plot_rfo_graphs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">plot_rfo_maps</span><span class="p">:</span>
             <span class="n">plot_rfo</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">ds</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
 
 <span class="c1"># Testing the correlation coefficients of resultant CRs across k-means runs</span>
@@ -557,7 +556,7 @@ To use wasserstein distance please install the wasserstein package in your envir
 </div>
 </div>
 </div>
-<p>Once you’re happy with the results and are confident the k-means setup is robust, run the next cell to save the clustering results from the last trial, and open the next file plot_and_analyze.ipynb.</p>
+<p>Once you’re happy with the results and confident the k-means setup is robust, run the next cell to save the clustering results from the last trial. Then open the next file plot_and_analyze.ipynb and we’ll explore some further data analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;./toy_ISCCP_cluster_centers.npy&quot;</span><span class="p">,</span> <span class="n">cl_trials</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
