@@ -1,0 +1,1332 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plot and Analyze &#8212; Cloud Regimes</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-pythia-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Robustness Testing" href="cluster_robustness_testing.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-T52X8HNYE8"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-T52X8HNYE8');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="132">
+    <div class="container-fluid" id="shim"></div>
+    <div class="container-fluid" id="banner"></div>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top bd-navbar shadow" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="https://projectpythia.org">
+  <img src="../_static/pythia_logo-white-rtext.svg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class=" collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org">Home</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://foundations.projectpythia.org">Foundations</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://cookbooks.projectpythia.org">Cookbooks</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/resource-gallery.html">Resources</a>
+  </li>
+  
+  <li class="nav-item">
+    
+    
+    
+    <a class="nav-link nav-internal" href="https://projectpythia.org/index.html#join-us">Community</a>
+  </li>
+  
+  
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/ProjectPythia" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/project_pythia" rel="noopener" target="_blank" title="Twitter">
+            <span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.youtube.com/channel/UCoZPBqJal5uKpO8ZiwzavCw" rel="noopener" target="_blank" title="YouTube">
+            <span><i class="fab fa-youtube-square"></i></span>
+            <label class="sr-only">YouTube</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    <div class="container-xl">
+      <div class="row">
+        
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../README.html">
+   Cloud Regime Cookbook
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Intro.html">
+   Introduction to Cloud Regimes
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Choosing a Value of k
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="k_sensitivity_testing.html">
+   Choosing a Value of K
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Testing Cluster Robustness / Repeatability of Results
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="cluster_robustness_testing.html">
+   Robustness Testing
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Mapping and Analyzing Cloud Regimes
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Plot and Analyze
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by <a href="https://projectpythia.org">Project Pythia</a>.<br><br>
+All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code content is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons BY 4.0 (CC BY 4.0)</a>.<br><br>
+
+</div>
+
+</div>
+
+        
+
+        <main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main"><div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/notebooks/plot_and_analyze.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Isaaciwd/Cloud-Regime-Cookbook.git"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Isaaciwd/Cloud-Regime-Cookbook.git/issues/new?title=Issue%20on%20page%20%2Fnotebooks/plot_and_analyze.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/Isaaciwd/Cloud-Regime-Cookbook.git/edit/main/notebooks/plot_and_analyze.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://binder.projectpythia.org/v2/gh/Isaaciwd/Cloud-Regime-Cookbook.git/main?urlpath=lab/tree/notebooks/plot_and_analyze.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> On this page
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prerequisites">
+   Prerequisites
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#defining-variables">
+   Defining Variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#opening-labeling-and-plotting">
+   Opening, Labeling and Plotting
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-analysis">
+   Further Analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+          <div id="main-content" class="row">
+            <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+              
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="plot-and-analyze">
+<h1>Plot and Analyze<a class="headerlink" href="#plot-and-analyze" title="Permalink to this headline"><i class="fas fa-link"></i></a></h1>
+<hr class="docutils" />
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<p>In this document we’ll take our the cloud regimes made in the previous chapter and create plots of the cluster centers and spatial distributions. You’ll also learn how to extract data about a specific cloud regime. Yes, we’ve already made plenty of plots of cluster centers and spatial distributions, however this script does it differently. <em>This script performs NO CLUSTERING</em>. It only takes a set of premade cloud regimes and fits the data it is passed to them. This is <strong>MUCH</strong> faster than performing the clustering again and allows one to apply cloud regimes to sperate data. For example, we created CRs from ISCCP observation data in this tutorial. Using this script, you could apply those CRs to data produced by models running with ISCCP satellite simulator and examine them. You’d do this by setting <code class="docutils literal notranslate"><span class="pre">data_path</span></code> as a path to the model data, but still passing the ISCCP observation cloud regimes to the <code class="docutils literal notranslate"><span class="pre">premade_cloud_regimes</span></code> variable. Also, at the end of the script you’ll learn how to use the outputs to further explore any other variables of interest in relation to your cloud regimes.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Concepts</p></th>
+<th class="head"><p>Importance</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/numpy/intermediate-numpy.html">Intermediate NumPy</a></p></td>
+<td><p>Necessary</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/xarray/xarray-intro.html">Xarray</a></p></td>
+<td><p>Necessary</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/data-formats/netcdf-cf.html">Understanding of NetCDF</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Familiarity with metadata structure</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://foundations.projectpythia.org/core/pandas/pandas.html">Introduction to Pandas</a></p></td>
+<td><p>Helpful</p></td>
+<td><p>Familiarity with labeled data</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><strong>Time to learn</strong>: 15 minutes</p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Functions</span> <span class="kn">import</span> <span class="n">plot_hists</span><span class="p">,</span> <span class="n">plot_rfo</span><span class="p">,</span> <span class="n">open_and_process</span>
+<span class="kn">import</span> <span class="nn">logging</span> <span class="k">as</span> <span class="nn">lgr</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wasserstein package is not installed so wasserstein distance cannot be used. Attempting to use wassertein distance will raise an error.
+To use wasserstein distance please install the wasserstein package in your environment: https://pypi.org/project/Wasserstein/ 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="defining-variables">
+<h2>Defining Variables<a class="headerlink" href="#defining-variables" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<p>Here we define the variables necessary to begin using the toy ISCCP dataset included with this cookbook. To start off leave these variables alone, but later on feel free to experiment.</p>
+<p>If running locally with your own dataset, you will need to change many of variables these to match and point towards your data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Path to data to cluster</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="s2">&quot;./ISCCP_toy_data.nc&quot;</span>
+
+<span class="c1"># Path to the directory you wish to save plots in if running as a script, if None plots will only be shown and not saved. Enter as String</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">save_prefix</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># prefix to put into the name of each plot to distinguish different runs of this script</span>
+
+<span class="c1"># Variable name of data to cluster in data_path</span>
+<span class="c1"># Name of tau dimension for var_name</span>
+<span class="c1"># Name of height/pressure dimension for var_name</span>
+<span class="n">var_name</span> <span class="o">=</span>  <span class="s1">&#39;n_pctaudist&#39;</span> 
+<span class="n">tau_var_name</span> <span class="o">=</span>  <span class="s1">&#39;levtau&#39;</span> 
+<span class="n">ht_var_name</span> <span class="o">=</span>  <span class="s1">&#39;levpc&#39;</span>
+<span class="n">lat_var_name</span> <span class="o">=</span> <span class="s1">&#39;lat&#39;</span>
+<span class="n">lon_var_name</span> <span class="o">=</span> <span class="s1">&#39;lon&#39;</span>
+
+<span class="c1"># Does this dataset use cloud top height or cloud top pressure? enter &quot;h&quot; for height or &quot;p&quot; for pressure</span>
+<span class="n">height_or_pressure</span> <span class="o">=</span> <span class="s1">&#39;p&#39;</span>
+
+<span class="c1"># The premade cloud regimes to use. The script will then fit the histograms located in the files in data_path into these CRs.</span>
+<span class="c1"># Set this variable to a path to a numpy ndarray, or an xarray data array of premade cloud regimes of shape=(k, n_tau_bins * n_pressure_bins)</span>
+<span class="n">premade_cloud_regimes</span> <span class="o">=</span> <span class="s2">&quot;./toy_ISCCP_cluster_centers.npy&quot;</span>
+
+<span class="c1"># Choose whether to use a euclidean or wasserstein distance</span>
+<span class="n">wasserstein_or_euclidean</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span>
+
+<span class="c1"># Minimum and Maximum longitudes and latitudes entered as list, or None for entire range</span>
+<span class="n">lat_range</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span><span class="mi">90</span><span class="p">]</span>
+<span class="n">lon_range</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span><span class="mi">180</span><span class="p">]</span>
+
+<span class="c1"># Time Range min and max, or None for all time, entered as list of str: Ex. [&quot;2003-03-01&quot;, &quot;2004-07-01&quot;] or [&#39;2003&#39;,&#39;2007&#39;]</span>
+<span class="n">time_range</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Use data only over land or over ocean</span>
+<span class="c1"># Set to &#39;L&#39; for land only, &#39;O&#39; for ocean only, or False for both land and ocean</span>
+<span class="n">only_ocean_or_land</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="c1"># Does this dataset have a built in variable for land fraction? if so enter as a string, otherwise cartopy will be used to mask out land or water</span>
+<span class="n">land_frac_var_name</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Logging level, set to &quot;INFO&quot; for information about what the code is doing, otherwise keep at &quot;WARNING&quot;</span>
+<span class="n">logging_level</span> <span class="o">=</span> <span class="s1">&#39;INFO&#39;</span>
+
+<span class="c1"># Setting up logger</span>
+<span class="n">lgr</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+<span class="c1"># Concatenating save_path and save prefix</span>
+<span class="k">if</span> <span class="n">save_path</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span> <span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path</span> <span class="o">+</span> <span class="n">save_prefix</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="opening-labeling-and-plotting">
+<h2>Opening, Labeling and Plotting<a class="headerlink" href="#opening-labeling-and-plotting" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<p>Here we open our data and assign each histogram to the nearest cluster. We store this information in an array named cluster_labels. After this we call plot_hists() to create plots of the CR centers, then we call plot_rfo() to create plots of the spatial distribution of each CR.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Automatically setting k from the premade cloud regimes</span>
+<span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">premade_cloud_regimes</span><span class="p">))</span>
+<span class="c1"># Setting k-means properteis to None since they arent used but still must be passed</span>
+<span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">n_init</span><span class="p">,</span> <span class="n">gpu</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+<span class="c1"># Opening data, and clustering</span>
+<span class="n">mat</span><span class="p">,</span> <span class="n">cluster_labels</span><span class="p">,</span> <span class="n">cluster_labels_temp</span><span class="p">,</span> <span class="n">valid_indicies</span><span class="p">,</span> <span class="n">ds</span> <span class="o">=</span> <span class="n">open_and_process</span><span class="p">(</span>
+    <span class="n">data_path</span><span class="p">,</span>
+    <span class="n">k</span><span class="p">,</span>
+    <span class="n">tol</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">init</span><span class="p">,</span>
+    <span class="n">n_init</span><span class="p">,</span>
+    <span class="n">var_name</span><span class="p">,</span>
+    <span class="n">tau_var_name</span><span class="p">,</span>
+    <span class="n">ht_var_name</span><span class="p">,</span>
+    <span class="n">lat_var_name</span><span class="p">,</span>
+    <span class="n">lon_var_name</span><span class="p">,</span>
+    <span class="n">height_or_pressure</span><span class="p">,</span>
+    <span class="n">wasserstein_or_euclidean</span><span class="p">,</span>
+    <span class="n">premade_cloud_regimes</span><span class="p">,</span>
+    <span class="n">lat_range</span><span class="p">,</span>
+    <span class="n">lon_range</span><span class="p">,</span>
+    <span class="n">time_range</span><span class="p">,</span>
+    <span class="n">only_ocean_or_land</span><span class="p">,</span>
+    <span class="n">land_frac_var_name</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">gpu</span><span class="o">=</span><span class="n">gpu</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># Plotting histograms</span>
+<span class="n">plot_hists</span><span class="p">(</span>
+    <span class="n">cluster_labels</span><span class="p">,</span>
+    <span class="n">k</span><span class="p">,</span>
+    <span class="n">ds</span><span class="p">,</span>
+    <span class="n">ht_var_name</span><span class="p">,</span>
+    <span class="n">tau_var_name</span><span class="p">,</span>
+    <span class="n">valid_indicies</span><span class="p">,</span>
+    <span class="n">mat</span><span class="p">,</span>
+    <span class="n">cluster_labels_temp</span><span class="p">,</span>
+    <span class="n">height_or_pressure</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># Plotting RFO</span>
+<span class="n">plot_rfo</span><span class="p">(</span><span class="n">cluster_labels</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Opening dataset:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Opening finished. Beginning preprocessing:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Reshaping data to shape (n_histograms, n_tau_bins* n_pc_bins):
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Reading data into memory:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Finished preprocessing:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: Calculating cluster_labels for premade_cloud_regimes:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:root: 1 seconds to calculate cluster_labels for premade_cloud_regimes:
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
+</pre></div>
+</div>
+<img alt="../_images/2092262f0aaa993138e8a95b4ddcdf56a9f0336575566cab322e9bdc11bc1ff6.png" src="../_images/2092262f0aaa993138e8a95b4ddcdf56a9f0336575566cab322e9bdc11bc1ff6.png" />
+<img alt="../_images/33232d1aa71864d980afe8378e25070bf8574580827c7fba2efe7e5c49288b01.png" src="../_images/33232d1aa71864d980afe8378e25070bf8574580827c7fba2efe7e5c49288b01.png" />
+</div>
+</div>
+</div>
+<div class="section" id="further-analysis">
+<h2>Further Analysis<a class="headerlink" href="#further-analysis" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<p>This is all well and good, but this analysis only goes so far. It’s likely a user will want to do further analysis beyond looking at the spatial distributions of the CRs. In this section you will learn how to do this.</p>
+<p>Described above, we create an array called <code class="docutils literal notranslate"><span class="pre">cluster_labels</span></code> that holds the cluster that each histogram belongs to. We will now make use fo this array.</p>
+<p>First re-open the dataset specified by the <code class="docutils literal notranslate"><span class="pre">data_path</span></code> variable. This is necessary because all the variables except <code class="docutils literal notranslate"><span class="pre">var_name</span></code> are automatically removed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body[data-theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:      (time: 24, lon: 360, lat: 60, levpc: 7, levtau: 6)
+Coordinates:
+  * time         (time) datetime64[ns] 2013-07-16T10:30:00 ... 2015-06-15T22:...
+  * lon          (lon) float32 0.5 1.5 2.5 3.5 4.5 ... 356.5 357.5 358.5 359.5
+  * lat          (lat) float32 -29.5 -28.5 -27.5 -26.5 ... 26.5 27.5 28.5 29.5
+  * levpc        (levpc) float32 95.0 245.0 375.0 500.0 620.0 740.0 912.5
+  * levtau       (levtau) float32 0.5 2.3 6.0 14.5 34.74 109.8
+Data variables:
+    n_pctaudist  (time, levtau, levpc, lat, lon) float32 dask.array&lt;chunksize=(24, 6, 7, 60, 360), meta=np.ndarray&gt;
+    pc           (time, lat, lon) float32 dask.array&lt;chunksize=(24, 60, 360), meta=np.ndarray&gt;
+Attributes: (12/67)
+    Conventions:                              CF-1.6, ACDD-1.3
+    summary:                                  The HGG product represents glob...
+    keywords:                                 EARTH SCIENCE &gt; ATMOSPHERE &gt; AT...
+    keywords_vocabulary:                      NASA Global Change Master Direc...
+    platform_vocabulary:                      NASA Global Change Master Direc...
+    instrument_vocabulary:                    NASA Global Change Master Direc...
+    ...                                       ...
+    geospatial_lon_min:                       0.0
+    geospatial_lon_max:                       360.0
+    geospatial_lon_resolution:                1.0
+    geospatial_vertical_min:                  10.0
+    geospatial_vertical_max:                  1025.0
+    history:                                  Mon Jul  3 15:52:50 2017: ncatt...</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-832587c0-7b9b-4a7c-999e-1fdc4a033b46' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-832587c0-7b9b-4a7c-999e-1fdc4a033b46' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>time</span>: 24</li><li><span class='xr-has-index'>lon</span>: 360</li><li><span class='xr-has-index'>lat</span>: 60</li><li><span class='xr-has-index'>levpc</span>: 7</li><li><span class='xr-has-index'>levtau</span>: 6</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-9fb2dbb0-b897-4ac3-8d1d-37fee396614f' class='xr-section-summary-in' type='checkbox'  checked><label for='section-9fb2dbb0-b897-4ac3-8d1d-37fee396614f' class='xr-section-summary' >Coordinates: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>2013-07-16T10:30:00 ... 2015-06-...</div><input id='attrs-89c46bf4-beb5-4b8c-821b-8444272df041' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-89c46bf4-beb5-4b8c-821b-8444272df041' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-19210b20-e58e-4ded-b24e-5feec7ac1ff0' class='xr-var-data-in' type='checkbox'><label for='data-19210b20-e58e-4ded-b24e-5feec7ac1ff0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;2013-07-16T10:30:00.000000000&#x27;, &#x27;2013-08-16T10:30:00.000000000&#x27;,
+       &#x27;2013-09-15T22:30:00.000000000&#x27;, &#x27;2013-10-16T10:30:00.000000000&#x27;,
+       &#x27;2013-11-15T22:30:00.000000000&#x27;, &#x27;2013-12-16T10:30:00.000000000&#x27;,
+       &#x27;2014-01-16T10:30:00.000000000&#x27;, &#x27;2014-02-14T22:30:00.000000000&#x27;,
+       &#x27;2014-03-16T10:30:00.000000000&#x27;, &#x27;2014-04-15T22:30:00.000000000&#x27;,
+       &#x27;2014-05-16T10:30:00.000000000&#x27;, &#x27;2014-06-15T22:30:00.000000000&#x27;,
+       &#x27;2014-07-16T10:30:00.000000000&#x27;, &#x27;2014-08-16T10:30:00.000000000&#x27;,
+       &#x27;2014-09-15T22:30:00.000000000&#x27;, &#x27;2014-10-16T10:30:00.000000000&#x27;,
+       &#x27;2014-11-15T22:30:00.000000000&#x27;, &#x27;2014-12-16T10:30:00.000000000&#x27;,
+       &#x27;2015-01-16T10:30:00.000000000&#x27;, &#x27;2015-02-14T22:30:00.000000000&#x27;,
+       &#x27;2015-03-16T10:30:00.000000000&#x27;, &#x27;2015-04-15T22:30:00.000000000&#x27;,
+       &#x27;2015-05-16T10:30:00.000000000&#x27;, &#x27;2015-06-15T22:30:00.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lon</span></div><div class='xr-var-dims'>(lon)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>0.5 1.5 2.5 ... 357.5 358.5 359.5</div><input id='attrs-793fe9d3-5a3d-4256-b6b4-4dba2f4b5bc1' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-793fe9d3-5a3d-4256-b6b4-4dba2f4b5bc1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1a91b996-b794-4408-b97a-3f990b0b6c23' class='xr-var-data-in' type='checkbox'><label for='data-1a91b996-b794-4408-b97a-3f990b0b6c23' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Center longitude of square grid cell</dd><dt><span>units :</span></dt><dd>degrees_east</dd><dt><span>valid_min :</span></dt><dd>0.0</dd><dt><span>valid_max :</span></dt><dd>360.0</dd><dt><span>bounds :</span></dt><dd>lon_bounds</dd><dt><span>standard_name :</span></dt><dd>longitude</dd><dt><span>axis :</span></dt><dd>X</dd></dl></div><div class='xr-var-data'><pre>array([  0.5,   1.5,   2.5, ..., 357.5, 358.5, 359.5], dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>lat</span></div><div class='xr-var-dims'>(lat)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>-29.5 -28.5 -27.5 ... 28.5 29.5</div><input id='attrs-4c40db42-cdbc-47e7-870c-c6980df2e96e' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4c40db42-cdbc-47e7-870c-c6980df2e96e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-26d84309-485e-476a-992f-4a71e51c764f' class='xr-var-data-in' type='checkbox'><label for='data-26d84309-485e-476a-992f-4a71e51c764f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Center latitude of square grid cell</dd><dt><span>units :</span></dt><dd>degrees_north</dd><dt><span>valid_min :</span></dt><dd>-90.0</dd><dt><span>valid_max :</span></dt><dd>90.0</dd><dt><span>bounds :</span></dt><dd>lat_bounds</dd><dt><span>standard_name :</span></dt><dd>latitude</dd><dt><span>axis :</span></dt><dd>Y</dd></dl></div><div class='xr-var-data'><pre>array([-29.5, -28.5, -27.5, -26.5, -25.5, -24.5, -23.5, -22.5, -21.5, -20.5,
+       -19.5, -18.5, -17.5, -16.5, -15.5, -14.5, -13.5, -12.5, -11.5, -10.5,
+        -9.5,  -8.5,  -7.5,  -6.5,  -5.5,  -4.5,  -3.5,  -2.5,  -1.5,  -0.5,
+         0.5,   1.5,   2.5,   3.5,   4.5,   5.5,   6.5,   7.5,   8.5,   9.5,
+        10.5,  11.5,  12.5,  13.5,  14.5,  15.5,  16.5,  17.5,  18.5,  19.5,
+        20.5,  21.5,  22.5,  23.5,  24.5,  25.5,  26.5,  27.5,  28.5,  29.5],
+      dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>levpc</span></div><div class='xr-var-dims'>(levpc)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>95.0 245.0 375.0 ... 740.0 912.5</div><input id='attrs-58f9b93c-c3dd-457a-854b-61d935b53cb3' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-58f9b93c-c3dd-457a-854b-61d935b53cb3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1224a979-3840-4313-be3c-55fdc87fafb9' class='xr-var-data-in' type='checkbox'><label for='data-1224a979-3840-4313-be3c-55fdc87fafb9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Pressure levels</dd><dt><span>units :</span></dt><dd>hPa</dd><dt><span>bounds :</span></dt><dd>pc_bounds</dd><dt><span>description :</span></dt><dd>Coordinate variable for cloud frequency histograms</dd></dl></div><div class='xr-var-data'><pre>array([ 95. , 245. , 375. , 500. , 620. , 740. , 912.5], dtype=float32)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>levtau</span></div><div class='xr-var-dims'>(levtau)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>0.5 2.3 6.0 14.5 34.74 109.8</div><input id='attrs-fceae181-6bea-4857-9fdf-27232283fa0f' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-fceae181-6bea-4857-9fdf-27232283fa0f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-fd74ab11-c0c0-4759-a487-dfe73fdfcd97' class='xr-var-data-in' type='checkbox'><label for='data-fd74ab11-c0c0-4759-a487-dfe73fdfcd97' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Optical thickness levels</dd><dt><span>units :</span></dt><dd>1</dd><dt><span>bounds :</span></dt><dd>tau_bounds</dd><dt><span>description :</span></dt><dd>Coordinate variable for cloud frequency histograms</dd></dl></div><div class='xr-var-data'><pre>array([  0.5 ,   2.3 ,   6.  ,  14.5 ,  34.74, 109.8 ], dtype=float32)</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-832bd608-77da-43c5-b752-32f207c08e75' class='xr-section-summary-in' type='checkbox'  checked><label for='section-832bd608-77da-43c5-b752-32f207c08e75' class='xr-section-summary' >Data variables: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>n_pctaudist</span></div><div class='xr-var-dims'>(time, levtau, levpc, lat, lon)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24, 6, 7, 60, 360), meta=np.ndarray&gt;</div><input id='attrs-4ca20d02-13d5-4895-baf4-baef45d89f74' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-4ca20d02-13d5-4895-baf4-baef45d89f74' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0cc8d49a-ccd2-4587-ba18-20ded0ce763a' class='xr-var-data-in' type='checkbox'><label for='data-0cc8d49a-ccd2-4587-ba18-20ded0ce763a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Cloudy pixel fraction in each cloud-top pressure (PC)/cloud optical depth (TAU) level</dd><dt><span>units :</span></dt><dd>1</dd><dt><span>valid_min :</span></dt><dd>-500</dd><dt><span>valid_max :</span></dt><dd>500</dd><dt><span>description :</span></dt><dd>Cloud detected by either IR or VIS threshold, cloud top location adjusted for optically thinner clouds</dd><dt><span>standard_name :</span></dt><dd>isccp_cloud_area_fraction</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 83.06 MiB </td>
+                        <td> 83.06 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (24, 6, 7, 60, 360) </td>
+                        <td> (24, 6, 7, 60, 360) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 1 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> float32 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="382" height="108" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="0" y1="0" x2="28" y2="0" style="stroke-width:2" />
+  <line x1="0" y1="36" x2="28" y2="36" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="0" y1="0" x2="0" y2="36" style="stroke-width:2" />
+  <line x1="28" y1="0" x2="28" y2="36" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="0.0,0.0 28.02293761910704,0.0 28.02293761910704,36.24782989210401 0.0,36.24782989210401" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="14.011469" y="56.247830" font-size="1.0rem" font-weight="100" text-anchor="middle" >6</text>
+  <text x="48.022938" y="18.123915" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,48.022938,18.123915)">24</text>
+
+
+  <!-- Horizontal lines -->
+  <line x1="98" y1="0" x2="114" y2="16" style="stroke-width:2" />
+  <line x1="98" y1="41" x2="114" y2="58" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="98" y1="0" x2="98" y2="41" style="stroke-width:2" />
+  <line x1="114" y1="16" x2="114" y2="58" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="98.0,0.0 114.9838361244846,16.9838361244846 114.9838361244846,58.18766554585201 98.0,41.20382942136741" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="98" y1="0" x2="218" y2="0" style="stroke-width:2" />
+  <line x1="114" y1="16" x2="234" y2="16" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="98" y1="0" x2="114" y2="16" style="stroke-width:2" />
+  <line x1="218" y1="0" x2="234" y2="16" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="98.0,0.0 218.0,0.0 234.9838361244846,16.9838361244846 114.9838361244846,16.9838361244846" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="114" y1="16" x2="234" y2="16" style="stroke-width:2" />
+  <line x1="114" y1="58" x2="234" y2="58" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="114" y1="16" x2="114" y2="58" style="stroke-width:2" />
+  <line x1="234" y1="16" x2="234" y2="58" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="114.9838361244846,16.9838361244846 234.98383612448458,16.9838361244846 234.98383612448458,58.18766554585201 114.9838361244846,58.18766554585201" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="174.983836" y="78.187666" font-size="1.0rem" font-weight="100" text-anchor="middle" >360</text>
+  <text x="254.983836" y="37.585751" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,254.983836,37.585751)">60</text>
+  <text x="96.491918" y="69.695747" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,96.491918,69.695747)">7</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li><li class='xr-var-item'><div class='xr-var-name'><span>pc</span></div><div class='xr-var-dims'>(time, lat, lon)</div><div class='xr-var-dtype'>float32</div><div class='xr-var-preview xr-preview'>dask.array&lt;chunksize=(24, 60, 360), meta=np.ndarray&gt;</div><input id='attrs-9e07ff68-7a66-4378-b5b2-99b51960345e' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-9e07ff68-7a66-4378-b5b2-99b51960345e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f9e1e1ae-8452-402f-aba0-54513369c629' class='xr-var-data-in' type='checkbox'><label for='data-f9e1e1ae-8452-402f-aba0-54513369c629' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Mean cloud-top pressure (PC) for cloudy pixels</dd><dt><span>units :</span></dt><dd>hPa</dd><dt><span>valid_min :</span></dt><dd>-495</dd><dt><span>valid_max :</span></dt><dd>525</dd><dt><span>description :</span></dt><dd>Grid cell average of cloud top pressure with VIS-adjusted location during daytime and nighttime location diurnally corrected</dd><dt><span>standard_name :</span></dt><dd>air_pressure_at_cloud_top</dd><dt><span>cell_methods :</span></dt><dd>area: mean</dd></dl></div><div class='xr-var-data'><table>
+    <tr>
+        <td>
+            <table style="border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <td> </td>
+                        <th> Array </th>
+                        <th> Chunk </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <th> Bytes </th>
+                        <td> 1.98 MiB </td>
+                        <td> 1.98 MiB </td>
+                    </tr>
+                    
+                    <tr>
+                        <th> Shape </th>
+                        <td> (24, 60, 360) </td>
+                        <td> (24, 60, 360) </td>
+                    </tr>
+                    <tr>
+                        <th> Dask graph </th>
+                        <td colspan="2"> 1 chunks in 2 graph layers </td>
+                    </tr>
+                    <tr>
+                        <th> Data type </th>
+                        <td colspan="2"> float32 numpy.ndarray </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td>
+        <svg width="201" height="112" style="stroke:rgb(0,0,0);stroke-width:1" >
+
+  <!-- Horizontal lines -->
+  <line x1="10" y1="0" x2="31" y2="21" style="stroke-width:2" />
+  <line x1="10" y1="41" x2="31" y2="62" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="10" y1="0" x2="10" y2="41" style="stroke-width:2" />
+  <line x1="31" y1="21" x2="31" y2="62" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="10.0,0.0 31.32225287770824,21.32225287770824 31.32225287770824,62.526082299075654 10.0,41.20382942136741" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="10" y1="0" x2="130" y2="0" style="stroke-width:2" />
+  <line x1="31" y1="21" x2="151" y2="21" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="10" y1="0" x2="31" y2="21" style="stroke-width:2" />
+  <line x1="130" y1="0" x2="151" y2="21" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="10.0,0.0 130.0,0.0 151.32225287770825,21.32225287770824 31.32225287770824,21.32225287770824" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Horizontal lines -->
+  <line x1="31" y1="21" x2="151" y2="21" style="stroke-width:2" />
+  <line x1="31" y1="62" x2="151" y2="62" style="stroke-width:2" />
+
+  <!-- Vertical lines -->
+  <line x1="31" y1="21" x2="31" y2="62" style="stroke-width:2" />
+  <line x1="151" y1="21" x2="151" y2="62" style="stroke-width:2" />
+
+  <!-- Colored Rectangle -->
+  <polygon points="31.32225287770824,21.32225287770824 151.32225287770825,21.32225287770824 151.32225287770825,62.526082299075654 31.32225287770824,62.526082299075654" style="fill:#ECB172A0;stroke-width:0"/>
+
+  <!-- Text -->
+  <text x="91.322253" y="82.526082" font-size="1.0rem" font-weight="100" text-anchor="middle" >360</text>
+  <text x="171.322253" y="41.924168" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(0,171.322253,41.924168)">60</text>
+  <text x="10.661126" y="71.864956" font-size="1.0rem" font-weight="100" text-anchor="middle" transform="rotate(45,10.661126,71.864956)">24</text>
+</svg>
+        </td>
+    </tr>
+</table></div></li></ul></div></li><li class='xr-section-item'><input id='section-d5c4ee08-d56c-4d9a-88e8-fa47974748fd' class='xr-section-summary-in' type='checkbox'  ><label for='section-d5c4ee08-d56c-4d9a-88e8-fa47974748fd' class='xr-section-summary' >Indexes: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>time</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-29d3fc0d-c0ed-432f-8713-aedfdc054b09' class='xr-index-data-in' type='checkbox'/><label for='index-29d3fc0d-c0ed-432f-8713-aedfdc054b09' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(DatetimeIndex([&#x27;2013-07-16 10:30:00&#x27;, &#x27;2013-08-16 10:30:00&#x27;,
+               &#x27;2013-09-15 22:30:00&#x27;, &#x27;2013-10-16 10:30:00&#x27;,
+               &#x27;2013-11-15 22:30:00&#x27;, &#x27;2013-12-16 10:30:00&#x27;,
+               &#x27;2014-01-16 10:30:00&#x27;, &#x27;2014-02-14 22:30:00&#x27;,
+               &#x27;2014-03-16 10:30:00&#x27;, &#x27;2014-04-15 22:30:00&#x27;,
+               &#x27;2014-05-16 10:30:00&#x27;, &#x27;2014-06-15 22:30:00&#x27;,
+               &#x27;2014-07-16 10:30:00&#x27;, &#x27;2014-08-16 10:30:00&#x27;,
+               &#x27;2014-09-15 22:30:00&#x27;, &#x27;2014-10-16 10:30:00&#x27;,
+               &#x27;2014-11-15 22:30:00&#x27;, &#x27;2014-12-16 10:30:00&#x27;,
+               &#x27;2015-01-16 10:30:00&#x27;, &#x27;2015-02-14 22:30:00&#x27;,
+               &#x27;2015-03-16 10:30:00&#x27;, &#x27;2015-04-15 22:30:00&#x27;,
+               &#x27;2015-05-16 10:30:00&#x27;, &#x27;2015-06-15 22:30:00&#x27;],
+              dtype=&#x27;datetime64[ns]&#x27;, name=&#x27;time&#x27;, freq=None))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>lon</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-51d07e8f-c4ec-420a-9c22-6efe6fc16e4b' class='xr-index-data-in' type='checkbox'/><label for='index-51d07e8f-c4ec-420a-9c22-6efe6fc16e4b' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([  0.5,   1.5,   2.5,   3.5,   4.5,   5.5,   6.5,   7.5,   8.5,   9.5,
+       ...
+       350.5, 351.5, 352.5, 353.5, 354.5, 355.5, 356.5, 357.5, 358.5, 359.5],
+      dtype=&#x27;float32&#x27;, name=&#x27;lon&#x27;, length=360))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>lat</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-ae5d4c56-3c26-482b-94ae-aa367273a0c3' class='xr-index-data-in' type='checkbox'/><label for='index-ae5d4c56-3c26-482b-94ae-aa367273a0c3' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([-29.5, -28.5, -27.5, -26.5, -25.5, -24.5, -23.5, -22.5, -21.5, -20.5,
+       -19.5, -18.5, -17.5, -16.5, -15.5, -14.5, -13.5, -12.5, -11.5, -10.5,
+        -9.5,  -8.5,  -7.5,  -6.5,  -5.5,  -4.5,  -3.5,  -2.5,  -1.5,  -0.5,
+         0.5,   1.5,   2.5,   3.5,   4.5,   5.5,   6.5,   7.5,   8.5,   9.5,
+        10.5,  11.5,  12.5,  13.5,  14.5,  15.5,  16.5,  17.5,  18.5,  19.5,
+        20.5,  21.5,  22.5,  23.5,  24.5,  25.5,  26.5,  27.5,  28.5,  29.5],
+      dtype=&#x27;float32&#x27;, name=&#x27;lat&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>levpc</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-9cd0942e-dd1a-409f-8669-e3e8ae05ec66' class='xr-index-data-in' type='checkbox'/><label for='index-9cd0942e-dd1a-409f-8669-e3e8ae05ec66' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([95.0, 245.0, 375.0, 500.0, 620.0, 740.0, 912.5], dtype=&#x27;float32&#x27;, name=&#x27;levpc&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>levtau</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-f72242bf-5539-4f89-a0b1-ffde9a2acf6d' class='xr-index-data-in' type='checkbox'/><label for='index-f72242bf-5539-4f89-a0b1-ffde9a2acf6d' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([0.5, 2.299999952316284, 6.0, 14.5, 34.7400016784668,
+       109.80000305175781],
+      dtype=&#x27;float32&#x27;, name=&#x27;levtau&#x27;))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-d573db7b-8f63-4c30-ad1b-6320cb3caf39' class='xr-section-summary-in' type='checkbox'  ><label for='section-d573db7b-8f63-4c30-ad1b-6320cb3caf39' class='xr-section-summary' >Attributes: <span>(67)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>Conventions :</span></dt><dd>CF-1.6, ACDD-1.3</dd><dt><span>summary :</span></dt><dd>The HGG product represents globally merged gridded data from all participating geostationary satellites and polar orbiters, reported on a 1. degree equal area grid every 3 hours. Data for each grid cell is selected from a hierarchy of satellite choices based on viewing angle. Empty grid cells are filled by diurnal interpolation within +/- 21 hours, daily interpolation within +/- 5 days, replication within 3 equal area grid cells poleward of 55 degrees, or weekly interpolation within +/- 2 weeks. Data reported include scene identification, cloud amounts, cloud type distribution, mean cloud properties, cloud type properties, surface properties, radiances and atmospheric profiles.</dd><dt><span>keywords :</span></dt><dd>EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC CHEMISTRY &gt; OXYGEN COMPOUNDS &gt; OZONE, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC PRESSURE &gt; SURFACE PRESSURE, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC TEMPERATURE, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC TEMPERATURE &gt; SURFACE TEMPERATURE &gt; AIR TEMPERATURE, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC TEMPERATURE &gt; SURFACE TEMPERATURE &gt; SKIN TEMPERATURE, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC TEMPERATURE &gt; UPPER AIR TEMPERATURE &gt; VERTICAL PROFILES, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC WATER VAPOR, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC WATER VAPOR &gt; HUMIDITY, EARTH SCIENCE &gt; ATMOSPHERE &gt; ATMOSPHERIC WATER VAPOR &gt; WATER VAPOR PROFILES, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD MICROPHYSICS &gt; CLOUD LIQUID WATER/ICE, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD MICROPHYSICS &gt; CLOUD OPTICAL DEPTH/THICKNESS, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD PROPERTIES, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD PROPERTIES &gt; CLOUD FRACTION, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD PROPERTIES &gt; CLOUD TOP PRESSURE, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD PROPERTIES &gt; CLOUD TOP TEMPERATURE, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD PROPERTIES &gt; CLOUD VERTICAL DISTRIBUTION, EARTH SCIENCE &gt; ATMOSPHERE &gt; CLOUDS &gt; CLOUD TYPES, EARTH SCIENCE &gt; CRYOSPHERE &gt; SNOW/ICE, EARTH SCIENCE &gt; LAND SURFACE &gt; SURFACE RADIATIVE PROPERTIES, EARTH SCIENCE &gt; LAND SURFACE &gt; SURFACE RADIATIVE PROPERTIES &gt; REFLECTANCE, EARTH SCIENCE &gt; LAND SURFACE &gt; SURFACE THERMAL PROPERTIES, EARTH SCIENCE &gt; LAND SURFACE &gt; SURFACE THERMAL PROPERTIES &gt; SKIN TEMPERATURE, EARTH SCIENCE &gt; LAND SURFACE &gt; TOPOGRAPHY &gt; TERRAIN ELEVATION, EARTH SCIENCE &gt; LAND SURFACE &gt; TOPOGRAPHY &gt; TERRAIN ELEVATION,EARTH SCIENCE &gt; OCEANS &gt; OCEAN TEMPERATURE &gt; SEA SURFACE TEMPERATURE, EARTH SCIENCE &gt; SPECTRAL/ENGINEERING &gt; INFRARED WAVELENGTHS &gt; BRIGHTNESS TEMPERATURE, EARTH SCIENCE &gt; SPECTRAL/ENGINEERING &gt; INFRARED WAVELENGTHS &gt; INFRARED IMAGERY, EARTH SCIENCE &gt; SPECTRAL/ENGINEERING &gt; PLATFORM CHARACTERISTICS &gt; VIEWING GEOMETRY, EARTH SCIENCE &gt; SPECTRAL/ENGINEERING &gt; SENSOR CHARACTERISTICS &gt; VIEWING GEOMETRY, EARTH SCIENCE &gt; SPECTRAL/ENGINEERING &gt; VISIBLE WAVELENGTHS &gt; VISIBLE IMAGERY, EARTH SCIENCE &gt; SPECTRAL/ENGINEERING &gt; VISIBLE WAVELENGTHS &gt; VISIBLE RADIANCE</dd><dt><span>keywords_vocabulary :</span></dt><dd>NASA Global Change Master Directory (GCMD) Science Keyword Version 8.1</dd><dt><span>platform_vocabulary :</span></dt><dd>NASA Global Change Master Directory (GCMD) Platforms Keyword Version 8.1</dd><dt><span>instrument_vocabulary :</span></dt><dd>NASA Global Change Master Directory (GCMD) Instruments Keywords Version 8.1</dd><dt><span>processing_level :</span></dt><dd>3</dd><dt><span>cdm_data_type :</span></dt><dd>Grid</dd><dt><span>metadata_link :</span></dt><dd>gov.noaa.ncdc.C00956</dd><dt><span>naming_authority :</span></dt><dd>gov.noaa.ncdc</dd><dt><span>institution :</span></dt><dd>NOAA National Centers for Environmental Information (NCEI)</dd><dt><span>project :</span></dt><dd>International Satellite Cloud Climatology Project (ISCCP)</dd><dt><span>program :</span></dt><dd>NOAA Climate Data Record Program for satellites, FY 2016</dd><dt><span>acknowledgement :</span></dt><dd>This project received funding support from NASA REASON PROGRAM, NASA MEASURES PROGRAM and NOAA CLIMATE DATA RECORD (CDR) PROGRAM</dd><dt><span>license :</span></dt><dd>No constraints on data access or use.</dd><dt><span>contributor_name :</span></dt><dd>William B. Rossow, Alison Walker, Violeta Golea, NOAA, EUMETSAT, ESA, JP/JMA, CHINA/CMA, BR/INPE, NASA</dd><dt><span>contributor_role :</span></dt><dd>principalInvestigator, processor, resourceProvider, resourceProvider, resourceProvider, resourceProvider, resourceProvider, resourceProvider, resourceProvider</dd><dt><span>creator_name :</span></dt><dd>NOAA National Centers for Environmental Information (NCEI); Ken Knapp, Bill Hankins, Alisa Young, Anand Inamdar</dd><dt><span>creator_email :</span></dt><dd>ncdc.isccp.team@noaa.gov</dd><dt><span>creator_url :</span></dt><dd>http://www.ncei.noaa.gov</dd><dt><span>creator_type :</span></dt><dd>institution</dd><dt><span>creator_institution :</span></dt><dd>NOAA National Centers for Environmental Information (NCEI)</dd><dt><span>publisher_name :</span></dt><dd>NOAA National Centers for Environmental Information (NCEI)</dd><dt><span>publisher_email :</span></dt><dd>ncdc.isccp.team@noaa.gov</dd><dt><span>publisher_url :</span></dt><dd>http://www.ncei.noaa.gov</dd><dt><span>publisher_type :</span></dt><dd>institution</dd><dt><span>publisher_institution :</span></dt><dd>NOAA National Centers for Environmental Information (NCEI)</dd><dt><span>references :</span></dt><dd>&#x27;Please include a citation for this paper in addition to the dataset citation when using the dataset: Rossow, W.B. and R.A. Schiffer, 1999: Advances in understanding clouds from ISCCP. Bulletin of the American Meteorological Society, 80, 2261-2287. doi: http://dx.doi.org/10.1175/1520-0477(1999)080&lt;2261:AIUCFI&gt;2.0.CO;2&#x27;,&#x27;ISCCP CDR Climate Algorithm Theoretical Basis Document (C-ATBD)&#x27;</dd><dt><span>comment :</span></dt><dd>---------- TO RE-MAP EQUAL-AREA MAP TO EQUAL-ANGLE (SQUARE LON,LAT) MAP ---------- For display purposes, the ISCCP equal-area map may be converted to an equal-angle map using replication. The variables &#x27;eqlat_index&#x27;, &#x27;sqlon_beg&#x27; and &#x27;sqlon_end&#x27;are provided for this purpose. Each equal-area cell is replicated into a specific range of longitude cells in the equal-angle map. For example, to remap an equal-area array eqvar[41252] to an equal-angle array sqmap[360,180], each eqvar[i] should be replicated into the range of cells indicated by sqlon_beg[i] and sqlon_end[i], and the lat index eqlat_index[i]. Using Fortran notation the assignment is: sqmap[sqlon_beg[i]:sqlon_end[i], eqlat_index[i]] = eqvar[i]. ---------- TO CONVERT COUNT UNITS TO PHYSICAL UNITS ---------- When attribute conversion_table is present for any variable, the reported values of count units may be converted to physical quantities by using the specified conversion table variable as a look-up table whose index is count value 0-255. For example, temperature = tmptab(count), temperature_variance = tmpvar(count), pressure = pretab(count), reflectance = rfltab(count), optical_depth = tautab(count), ozone = ozntab(count), humidity = humtab(count), water_path = wpatab(count). ---------- DEFINITION OF CLOUD TYPES ---------- VIS/IR cloud types are defined by a histogram of cloud top pressure and cloud optical depth, for both liquid and ice clouds. IR cloud types are defined by a histogram of cloud top pressure. Identification labels for the 18 VIS/IR cloud types and the 3 IR cloud types are given in the &#x27;cloud_type_label&#x27; and &#x27;cloud_irtype_label&#x27; variables, which correspond to the order of the cloud type variable arrays. ---------- TO COMPUTE CLOUD TOP HEIGHT ---------- Cloud top height in meters may be computed by applying lapse rate to the difference between cloud top temperature and surface temperature. Given rlapse 6.5, the formula is:  height_meters = (ts - tc) / rlapse * 1000.0. ---------- TO COMPUTE TOTAL IR BRIGHTNESS TEMPERATURE ---------- Using IR cloud/clear categories: n_ir_clear = n_total - n_ir_cloudy, and then total_ir_bt = ( (n_ir_cloudy * ir_ircloudy) + (n_ir_clear * ir_irclear) ) / n_total, where ir_ircloudy and ir_irclear are values of count units. The resulting total_ir_bt can be converted from count units to physical units using the tmptab conversion table. Using VIS/IR cloud/clear categories: n_clear = n_total - n_cloudy, and then total_ir_bt = ( (n_cloudy * ir_visircloudy)+ (n_clear * ir_visirclear) / n_total, where ir_visircloudy and ir_visirclear are values of count units. The resulting total_ir_bt can be converted from count units to physical units using the tmptab conversion table. ---------- TO COMPUTE TOTAL VIS RADIANCE ---------- Using IR cloud/clear categories: n_ir_clear = n_total - n_ir_cloudy, and then total_vis_radiance = ( (n_ir_cloudy * vis_ircloudy) + (n_ir_clear * vis_irclear) ) / n_total. Using VIS/IR cloud/clear categories: n_clear = n_total - n_cloudy, and then total_vis_radiance = ( (n_cloudy * vis_visircloudy)+ (n_clear * vis_visirclear) / n_total.</dd><dt><span>id :</span></dt><dd>ISCCP.HGG.0.GLOBAL.1983.07.01.0000.GPC.10KM.CS00.EQ1.00.nc</dd><dt><span>isccp_input_files :</span></dt><dd> gow/ds/ISCCP.HGS.v01r00.GOE6.1983.07.01.0000.CSU.10KM.CS0000100031.EQ1.00.nc met/ds/ISCCP.HGS.0.MET2.1983.07.01.0000.ESA.10KM.CS0000100031.EQ1.00.nc gms/ds/ISCCP.HGS.0.GMS2.1983.07.01.0000.JMA.10KM.CS0000100031.EQ1.00.nc noa/ds/ISCCP.HGS.0.NOA7.1983.07.01.0000.NOA.10KM.CS0000100031.EQ1.00.nc goe/ds/ISCCP.HGS.0.GOE5.1983.07.01.0000.UWS.10KM.CS0000100031.EQ1.00.nc</dd><dt><span>time_coverage_start :</span></dt><dd>1983-06-30T22:30:00.000Z</dd><dt><span>time_coverage_end :</span></dt><dd>1983-07-01T01:29:59.999Z</dd><dt><span>time_coverage_duration :</span></dt><dd>PT3H</dd><dt><span>time_coverage_resolution :</span></dt><dd>PT3H</dd><dt><span>geospatial_bounds :</span></dt><dd>POLYGON((-90.0 0.0, -90.0 360.0, 90.0 360.0, 90.0 0.0, -90.0 0.0))</dd><dt><span>geospatial_bounds_crs :</span></dt><dd>EPSG:4326</dd><dt><span>geospatial_lat_units :</span></dt><dd>degrees_north</dd><dt><span>geospatial_lon_units :</span></dt><dd>degrees_east</dd><dt><span>geospatial_vertical_units :</span></dt><dd>hPa</dd><dt><span>geospatial_vertical_positive :</span></dt><dd>down</dd><dt><span>isccp_year :</span></dt><dd>1983</dd><dt><span>isccp_month :</span></dt><dd>7</dd><dt><span>isccp_day :</span></dt><dd>1</dd><dt><span>isccp_gmt :</span></dt><dd>0</dd><dt><span>isccp_number_of_satellites_contributing :</span></dt><dd>5</dd><dt><span>platform :</span></dt><dd>GMS-2, METEOSAT-2, GOES-6, GOES-5,</dd><dt><span>instrument :</span></dt><dd>VISSR-GMS, MVIRI, VAS, VAS,</dd><dt><span>isccp_percent_full_cells :</span></dt><dd>95</dd><dt><span>isccp_percent_empty_cells :</span></dt><dd>5</dd><dt><span>NCO :</span></dt><dd>4.4.4</dd><dt><span>title :</span></dt><dd>International Satellite Cloud Climatology Project 3-hourly Gridded Global data -- ISCCP HGG Basic</dd><dt><span>source :</span></dt><dd>The source for the ISCCP Basic data files are the original ISCCP files. ISCCP Basic represents a subset of variables from ISCCP that have been remapped to equal-angle, do not use table to store data, etc. in order to make the files CF compliant</dd><dt><span>date_issued :</span></dt><dd>2017-07-03T19:52:50Z</dd><dt><span>product_version :</span></dt><dd>v01r00 Basic</dd><dt><span>date_created :</span></dt><dd>2017-07-03T19:52:50Z</dd><dt><span>date_modified :</span></dt><dd>2017-07-03T19:52:50Z</dd><dt><span>date_metadata_modified :</span></dt><dd>2017-07-03T19:52:50Z</dd><dt><span>geospatial_lat_min :</span></dt><dd>-90.0</dd><dt><span>geospatial_lat_max :</span></dt><dd>90.0</dd><dt><span>geospatial_lat_resolution :</span></dt><dd>1.0</dd><dt><span>geospatial_lon_min :</span></dt><dd>0.0</dd><dt><span>geospatial_lon_max :</span></dt><dd>360.0</dd><dt><span>geospatial_lon_resolution :</span></dt><dd>1.0</dd><dt><span>geospatial_vertical_min :</span></dt><dd>10.0</dd><dt><span>geospatial_vertical_max :</span></dt><dd>1025.0</dd><dt><span>history :</span></dt><dd>Mon Jul  3 15:52:50 2017: ncatted -a units,lon_bounds,c,c,degrees_east -a comment,lon_bounds,c,c,longitude values at east and west bounds of the grid cell -a units,lat_bounds,c,c,degrees_north -a comment,lat_bounds,c,c,latitude values at north and south bounds of the gridcell -a units,pc_bounds,c,c,hPa -a comment,pc_bounds,c,c,Pressure values at bounds of the pressure bins -a units,tau_bounds,c,c,1 -a comment,tau_bounds,c,c,Optical depth values at bounds of the depth bins -a axis,lat,c,c,Y -a axis,lon,c,c,X -a geospatial_lat_min,global,m,f,-90 -a geospatial_lat_max,global,m,f,90 -a geospatial_lat_resolution,global,m,f,1 -a geospatial_lon_min,global,m,f,0 -a geospatial_lon_max,global,m,f,360 -a geospatial_lon_resolution,global,m,f,1 -a geospatial_vertical_min,global,m,f,10 -a geospatial_vertical_max,global,m,f,1025 -a units,satcodes,d,, -a units,satids,d,, -a units,satnames,d,, -a units,cloud_irtype_label,d,, -a units,cloud_type_label,d,, /snfs2/isccp-p/basic/intermediate//temp_file3.nc -O /snfs2/isccp-p/prd/basic/hgg/1983/ISCCP-Basic.HGG.0.GLOBAL.1983.07.01.0000.GPC.10KM.CS00.EA1.00.nc
+Mon Jul  3 15:52:50 2017: ncatted -a conversion_table,,d,, -a title,global,a,c, Basic -a description,snoice,m,c,Mean snow/ice cover for the cell -a source,global,o,c,The source for the ISCCP Basic data files are the original ISCCP files. ISCCP Basic represents a subset of variables from ISCCP that have been remapped to equal-angle, do not use table to store data, etc. in order to make the files CF compliant -a product_version,global,m,c,v01r00 Basic -a date_issued,global,m,c,2017-07-03T19:52:50Z -a date_created,global,m,c,2017-07-03T19:52:50Z -a date_modified,global,m,c,2017-07-03T19:52:50Z -a date_metadata_modified,global,m,c,2017-07-03T19:52:50Z -a description,levpc,c,c,Coordinate variable for cloud frequency histograms -a description,levtau,c,c,Coordinate variable for cloud frequency histograms -a units,^cldamt,m,c,percent -a bounds,time,c,c,time_bounds -a valid_min,n_total,m,s,0 -a valid_max,n_total,m,s,32766 -a valid_min,snoice,m,b,0 -a valid_max,snoice,m,b,100 -a long_name,cldamt,m,c,Cloud amount -a long_name,cldamt_ir,m,c,Cloud amount (using IR data) -a long_name,cldamt_irmarg,m,c,Cloud amount uncertainty (using IR data) -a note,cldamt_irmarg,c,c,This is the ISCCP variable: n_irmarg_cloudy represented as a fraction. It represents the fraction of pixels that are colder than clear sky by a smaller amount than what is flagged in cldamt_ir and represents cloud amount uncertainty. -a long_name,cldamt_types,m,c,Cloud amount by cloud type -a long_name,cldamt_irtypes,m,c,Cloud amount by IR cloud type -a calendar,time,c,c,gregorian -a cell_methods,eqheight,c,c,area: mean -a cell_methods,pc,c,c,area: mean -a cell_methods,pc_ir,c,c,area: mean -a cell_methods,pc_pcdist,c,c,area: mean -a cell_methods,pc_type,c,c,area: mean -a cell_methods,^sigma,c,c,area: standard_deviation -a cell_methods,^tc,c,c,area: mean -a cell_methods,tau,c,c,area: mean -a cell_methods,tau_ir,c,c,area: mean -a cell_methods,tau_type,c,c,area: mean -a cell_methods,^wp,c,c,area: mean /snfs2/isccp-p/basic/intermediate//temp_file2.nc -O /snfs2/isccp-p/basic/intermediate//temp_file3.nc
+Mon Jul  3 15:52:49 2017: ncks -a -4 -L 5 /snfs2/isccp-p/basic/intermediate//temp_file.nc -O /snfs2/isccp-p/basic/intermediate//temp_file2.nc
+2017-06-14T13:35:34.000Z bhankins d1fill_weekly /snfs2/isccp-p/prd/wrkdirs/1983_07 1983 07 01 1983 07 31
+2017-06-14T12:55:31.000Z bhankins d1fill_daily /snfs2/isccp-p/prd/wrkdirs/1983_07 1983 07 01 1983 07 31
+2017-06-14T12:49:22.000Z bhankins d1fill_diurnal /snfs2/isccp-p/prd/wrkdirs/1983_07 1983 07 01 1983 07 31
+2017-05-15T21:04:57.000Z kknapp d1prod /snfs2/isccp-p/prd/wrkdirs/1983_07 1983 07 01 1983 07 31</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<p>The optical depth - cloud top height joint histograms should be stored in <code class="docutils literal notranslate"><span class="pre">ds</span></code> under the variable entered as <code class="docutils literal notranslate"><span class="pre">var_name</span></code>, such that <code class="docutils literal notranslate"><span class="pre">ds[var_name]</span></code> opens the raw histogram data. For ISCCP, this data is in the shape <code class="docutils literal notranslate"><span class="pre">(n_time,</span> <span class="pre">n_tau,</span> <span class="pre">n_pressures,</span> <span class="pre">n_lat,</span> <span class="pre">n_lon)</span></code> where <code class="docutils literal notranslate"><span class="pre">n_time</span></code>, <code class="docutils literal notranslate"><span class="pre">n_tau</span></code>, <code class="docutils literal notranslate"><span class="pre">n_pressures</span></code>… are the number of times, tau bins, pressure bins, etc. that are present in the DataArray. Other data products will be roughly similar to this but may have the dimensions in a different order. <code class="docutils literal notranslate"><span class="pre">cluster_labels</span></code> is an array of integers in (almost) this same shape, but without <code class="docutils literal notranslate"><span class="pre">n_tau</span></code> and <code class="docutils literal notranslate"><span class="pre">n_pressure</span></code> dimensions. So, in this case cluster labels is shape <code class="docutils literal notranslate"><span class="pre">(n_time,</span> <span class="pre">n_lat,</span> <span class="pre">n_lon)</span></code>. The value of <code class="docutils literal notranslate"><span class="pre">cluster_labels[specific_time,</span> <span class="pre">specific_lat,</span> <span class="pre">specific_lon]</span></code> will be an integer ranging from 0 to k-1 that indicates which CR the histogram located at <code class="docutils literal notranslate"><span class="pre">ds[var_name][specific_time,:,:,</span> <span class="pre">specific_lat,</span> <span class="pre">specific_lon]</span></code> belongs to. This may be slightly confusing, but a value of 0 indicates this histogram belongs to CR1, a value of 1 indicates it belongs to CR2, 2 to CR3 etc… This indexing works better for some operations in python, but if it truly displeases you, there is a very easy fix. After all the pre-written function calls but before starting your analysis, simply add the line <code class="docutils literal notranslate"><span class="pre">cluster_labels</span> <span class="pre">+=</span> <span class="pre">1</span></code>. This will reindex the values to run from 1 through k, where each value is directly equal to the CR the corresponding histogram has been labeled as. It is also important to note that any histogram that contains a <code class="docutils literal notranslate"><span class="pre">NaN</span></code> will not be assigned a cluster, and its corresponding value in cluster labels will also be <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<p>Now that we understand the structure of the <code class="docutils literal notranslate"><span class="pre">cluster_labels</span></code> array, let’s go over how to use it. As can be seen above, our <code class="docutils literal notranslate"><span class="pre">ds</span></code> has two variables: <code class="docutils literal notranslate"><span class="pre">n_pctaudist</span></code> which holds the histogram data, and <code class="docutils literal notranslate"><span class="pre">pc</span></code> which holds the mean cloud-top pressure for cloudy pixels in each histogram. We will use the <code class="docutils literal notranslate"><span class="pre">cluster_labels</span></code> array and the <code class="docutils literal notranslate"><span class="pre">pc</span></code> variable to calculate the mean cloud-top pressure for each CR. (Yes, this could also be calculated from the raw histogram data, but here we use a separate variable to illustrate how to do this for a variable that can’t simply be derived from the histogram data.)</p>
+<p>Now, let’s create a DataArray of the mean cloud-top pressures.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pc</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">pc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we can loop through each CR and calculate the average cloud top pressure. We do this with the <code class="docutils literal notranslate"><span class="pre">dataarray.where()</span></code> function provided by xarray. This function (used on line 2 in the following cell) allows us to grab all the values of <code class="docutils literal notranslate"><span class="pre">pc</span></code> where <code class="docutils literal notranslate"><span class="pre">cluster_labels</span></code> is equal to a certain cluster and mask out all the other values. We can then take the mean of this and get the mean cloud top pressure for a certain CR.</p>
+<p>This method can be extended to be used on any variable, not just average cloud top pressure. It is also possible to remove the for loop in the below cell and perform this operation using only broadcasting and vectorization if one wishes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Looping through each cluster</span>
+<span class="k">for</span> <span class="n">cr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="c1"># Grabbing the values of pc for histograms assigned to cr</span>
+    <span class="n">pc_of_cr</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cluster_labels</span> <span class="o">==</span> <span class="n">cr</span><span class="p">)</span>
+    <span class="c1"># Calculating the mean cloud top pressure</span>
+    <span class="n">average_cloud_top_pressure</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">pc_of_cr</span><span class="p">)</span>
+    <span class="c1"># Printing results</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The average cloud top pressure of CR</span><span class="si">{</span><span class="n">cr</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">average_cloud_top_pressure</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The average cloud top pressure of CR1 is 424.6779479980469 
+The average cloud top pressure of CR2 is 649.9925537109375 
+The average cloud top pressure of CR3 is 435.6922607421875 
+The average cloud top pressure of CR4 is 711.024169921875 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<p>You’ve now learned to create and analyze cloud regimes! This process can be used on any data product that contains joint cloud top height and optical depth histograms, not just ISCCP. So go out there and get clustering on your own data!</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="cluster_robustness_testing.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Robustness Testing</p>
+        </div>
+    </a>
+</div>
+            </div>
+          </div>
+        </main>
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+<footer class="footer">
+  <div class="container-fluid m-0 p-0">
+  
+    <div class="footer-item">
+    
+  <div class="container-fluid footer-logos">
+    <div class="container-xl">
+      <div class="row d-flex flex-wrap align-items-center">
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="NCAR" src="../_images/NCAR-contemp-logo-blue.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="Unidata" src="../_images/Unidata_logo_horizontal_1200x300.svg" style="width: 100%">
+        </div>
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 p-2 mx-auto">
+          <img alt="UAlbany" src="../_images/UAlbany-A2-logo-purple-gold.svg" style="width: 100%">
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  
+    <div class="footer-item">
+    
+    </div>
+  
+    <div class="footer-item">
+      <div class="container-fluid footer-info">
+    <div class="container-xl">
+      <div class="d-flex justify-content-center">
+        <p class="py-1 m-0">
+            &copy;&nbsp;2023.
+        
+          By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
+        
+          Last updated on 5 September 2023.
+        </p>
+      </div>
+    </div>
+  </div>
+    </div>
+  
+    <div class="footer-item">
+    
+    </div>
+  
+  </div>
+</footer>
+  </body>
+</html>
