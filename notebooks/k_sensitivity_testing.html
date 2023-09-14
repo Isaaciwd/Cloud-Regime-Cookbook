@@ -362,8 +362,8 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#preforming-clustering">
-   Preforming Clustering
+  <a class="reference internal nav-link" href="#performing-clustering">
+   Performing Clustering
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -389,24 +389,24 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 <hr class="docutils" />
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>This script is designed to help the user decide on k, the number of clusters/Cloud regimes to produce. It will perform clustering for values of k within the range specified by the user editable k_range variable. For each value of k, this script will create a range of plots. First it will create a plot showing the correlation coefficients between the CR centers, then a plot showing the correlation between the space/time correlation of the CRs. Furthermore, after clustering for the first value of k is preformed, a correlation matrix will be made between the current and previous value of K. For example, if you were testing values of k from 3 to 7, after the clustering for k=3 and k=4 is performed, a plot of the correlations between the CRs from k=3 and k=4 will be created. This is useful to discern if increasing k by one has produced a genuinely new CR, or just split a CR that already existed. If all the CRs for k=4 are “highly” correlated with a CR from k=3, then it’s unlikely a new CR was created. The user can also set plot_cr_centers and plot_rfo_maps to true, and plots of the CR centers as well as spatial maps will be shown for each value of k.</p>
-<p>Choosing a value of k is still unfortunately not an exact science and is a weak point in the CR workflow. Previous works have laid out specific conditions and correlation thresholds to define when k is large enough. However, these thresholds and conditions tend to change over time, and correlation thresholds from one set of data may yield un-ideal results when applied to a different set of data. However, here are the general steps and conditions that are typically used as outlined by <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/26/19/jcli-d-13-00024.1.xml">Tselioudis et al. 2013</a>:</p>
+<p>This script is designed to help the user decide on k, the number of clusters/Cloud regimes to produce. It will perform clustering for values of k within the range specified by the user-editable <code class="docutils literal notranslate"><span class="pre">k_range</span></code> variable. For each value of k, this script will create a range of plots. First it will create a plot showing the correlation coefficients between the CR centers, then a plot showing the correlation between the space/time correlation of the CRs. Furthermore, after clustering for the first value of k is preformed, a correlation matrix will be made between the current and previous value of k. For example, if you were testing values of k from 3 to 7, after the clustering for k=3 and k=4 is performed, a plot of the correlations between the CRs from k=3 and k=4 will be created. This is useful to discern if increasing k by one has produced a genuinely new CR, or just split a CR that already existed. If all the CRs for k=4 are “highly” correlated with a CR from k=3, then it’s unlikely a new CR was created. The user can also set <code class="docutils literal notranslate"><span class="pre">plot_cr_centers</span></code> and <code class="docutils literal notranslate"><span class="pre">plot_rfo_maps</span></code> to true, and plots of the CR centers as well as spatial maps will be shown for each value of k.</p>
+<p>Choosing a value of k is, unfortunately, not an exact science and is a weak point in the CR workflow (and all k-means approaches). Previous works have laid out specific conditions and correlation thresholds to define when k is large enough. However, these thresholds and conditions tend to change over time, and correlation thresholds from one set of data may yield non-ideal results when applied to a different set of data. However, here are the general steps and conditions that are typically used as outlined by <a class="reference external" href="https://journals.ametsoc.org/view/journals/clim/26/19/jcli-d-13-00024.1.xml">Tselioudis et al. 2013</a>:</p>
 <ol class="arabic simple">
 <li><p>Does clustering converge with a tolerance of 0.001?</p></li>
 <li><p>Is this convergence insensitive to the initial centroids?</p></li>
 <li><p>Is dispersion of all the vectors in each cluster minimized?</p></li>
 <li><p>Does a distinctly new cluster appear when increasing k by 1?</p></li>
 </ol>
-<p>Condition 1 is automatically checked by the code. If it is not met, an error will be raised, and you will be prompted the change hyper-parameters of the k-means algorithm. However, when using Wasserstein distance this value of tol (which is a measure of the total change in the cluster centers between iterations) will likely be much too small and may need to be increased by quite a few orders of magnitude depending on the dataset to be able to reach convergence. Condition 2 will be fully checked in the next chapter: Testing Cluster Robustness / Repeatability of Results. Condition 3 is a tricky one, and we do not really touch it here. It seems “the dispersion of all the vectors in each cluster (rms of each vector’s distance from the centroid)” would decrease as k increases and clusters become more compact, not necessarily reaching a minimum at some optimum value of k. Without additional conditions or details that do not seem to be provided for this test, it is not particularly useful. Condition 4 is checked using the assortment of correlation matrices that this script will create. If two CRs have a high centroid correlation and space-time correlation with each other than it is likely that a CR has split (as opposed to a new one appearing) when increasing k by 1. This can be further checked by the k+1 correlation matrices. Typically studies will state specific correlation thresholds for CRs being too highly correlated (typically from 0.6-0.9 for histogram correlations), however these are not consistent across studies, and they cannot be consistent and continue to provide excellent results.</p>
+<p>Condition 1 is automatically checked by the code. If it is not met, an error will be raised, and you will be prompted to change hyper-parameters of the k-means algorithm. However, when using Wasserstein distance this value of <code class="docutils literal notranslate"><span class="pre">tol</span></code> (which is a measure of the total change in the cluster centers between iterations) will likely be much too small and may need to be increased by quite a few orders of magnitude depending on the dataset to be able to reach convergence. Condition 2 will be fully checked in the next chapter: <em>Testing Cluster Robustness / Repeatability of Results</em>. Condition 3 is a tricky one, and we do not really touch it here. It seems “the dispersion of all the vectors in each cluster (RMS of each vector’s distance from the centroid)” would decrease as k increases and clusters become more compact, not necessarily reaching a minimum at some optimum value of k. Without additional conditions or details that do not seem to be provided for this test, it is not particularly useful. Condition 4 is checked using the assortment of correlation matrices that this script will create. If two CRs have a high centroid correlation and space-time correlation with each other than it is likely that a CR has split (as opposed to a new one appearing) when increasing k by 1. This can be further checked by the k+1 correlation matrices. Typically studies will state specific correlation thresholds for CRs being too highly correlated (typically from 0.6-0.9 for histogram correlations), however these are not consistent across studies, and they cannot be consistent and continue to provide excellent results.</p>
 </div>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>It is important to understand the k-means clustering algorithm and how it works. Here’s a <a class="reference external" href="https://neptune.ai/blog/k-means-clustering">good starting resource</a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">the documentation of sklearns k-means algorithm</a> for further documentation of all the variables you may need to use in these scripts. Also helpful is familiarity with Xarray and NetCDF file formats.</p>
+<p>It is important to understand the k-means clustering algorithm and how it works. Here’s a <a class="reference external" href="https://neptune.ai/blog/k-means-clustering">good starting resource</a> and <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">the documentation of sklearn’s k-means algorithm</a> for further documentation of all the variables you may need to use in these scripts. Also helpful is familiarity with <a class="reference external" href="https://docs.xarray.dev/en/stable/">Xarray</a> and <a class="reference external" href="https://foundations.projectpythia.org/core/data-formats/netcdf-cf.html">NetCDF</a> file formats.</p>
 <ul class="simple">
 <li><p><strong>Time to learn</strong>: 30 minutes</p></li>
 <li><p><strong>System requirements</strong>:</p>
 <ul>
-<li><p>If you wish to use Wasserstein distance the <a class="reference external" href="https://foundations.projectpythia.org/core/data-formats/netcdf-cf.html">Wasserstein</a> package must be installed (and its ideal to have many processors at your disposal)</p></li>
+<li><p>If you wish to use Wasserstein distance the <a class="reference external" href="https://github.com/pkomiske/Wasserstein">Wasserstein</a>  package must be installed (and it is recommended to have many processors at your disposal)</p></li>
 <li><p>If you wish to run Euclidean k-means on a GPU then the system must have an Nvidia GPU</p></li>
 </ul>
 </li>
@@ -435,7 +435,7 @@ To use wasserstein distance please install the wasserstein package in your envir
 </div>
 <div class="section" id="defining-variables">
 <h2>Defining Variables<a class="headerlink" href="#defining-variables" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>Here we define the variables necessary to begin using the toy ISCCP dataset included with this cookbook. To start off leave these variables alone, but later on feel free to experiment. For example, if you perform this analysis for only over land, or only from 15N to 15S does the final value of k you decide on change? Is it smaller or larger?</p>
+<p>Here we define the variables necessary to begin using the toy ISCCP dataset included with this cookbook. To start off leave these variables alone, but later on feel free to experiment. For example, if you perform this analysis for only over land, or only from 15N to 15S does the final value of k change? Is it smaller or larger?</p>
 <p>If running locally with your own dataset, you will need to change many of variables these to match and point towards your data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -506,12 +506,34 @@ To use wasserstein distance please install the wasserstein package in your envir
 <span class="c1"># Automatically setting premade_cloud_regimes to none because this file does not need them. Do not Change.</span>
 <span class="n">premade_cloud_regimes</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="c1"># Setting k to an arbitrary number as it wont be used but still must be passed</span>
-<span class="n">k</span><span class="o">=-</span><span class="mi">1</span>
+<span class="n">k</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 <span class="c1"># Concatenating save_path and save prefix</span>
-<span class="k">if</span> <span class="n">save_path</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span> <span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path</span> <span class="o">+</span> <span class="n">save_prefix</span>
+<span class="k">if</span> <span class="n">save_path</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path</span> <span class="o">+</span> <span class="n">save_prefix</span>
 
 <span class="c1"># Opening and preprocessing data</span>
-<span class="n">mat</span><span class="p">,</span> <span class="n">valid_indicies</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">histograms</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">open_and_process</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">init</span><span class="p">,</span> <span class="n">n_init</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">tau_var_name</span><span class="p">,</span> <span class="n">ht_var_name</span><span class="p">,</span> <span class="n">lat_var_name</span><span class="p">,</span> <span class="n">lon_var_name</span><span class="p">,</span> <span class="n">height_or_pressure</span><span class="p">,</span> <span class="n">wasserstein_or_euclidean</span><span class="p">,</span> <span class="n">premade_cloud_regimes</span><span class="p">,</span> <span class="n">lat_range</span><span class="p">,</span> <span class="n">lon_range</span><span class="p">,</span> <span class="n">time_range</span><span class="p">,</span> <span class="n">only_ocean_or_land</span><span class="p">,</span> <span class="n">land_frac_var_name</span><span class="p">,</span> <span class="n">cluster</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">mat</span><span class="p">,</span> <span class="n">valid_indicies</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">histograms</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">open_and_process</span><span class="p">(</span>
+    <span class="n">data_path</span><span class="p">,</span>
+    <span class="n">k</span><span class="p">,</span>
+    <span class="n">tol</span><span class="p">,</span>
+    <span class="n">max_iter</span><span class="p">,</span>
+    <span class="n">init</span><span class="p">,</span>
+    <span class="n">n_init</span><span class="p">,</span>
+    <span class="n">var_name</span><span class="p">,</span>
+    <span class="n">tau_var_name</span><span class="p">,</span>
+    <span class="n">ht_var_name</span><span class="p">,</span>
+    <span class="n">lat_var_name</span><span class="p">,</span>
+    <span class="n">lon_var_name</span><span class="p">,</span>
+    <span class="n">height_or_pressure</span><span class="p">,</span>
+    <span class="n">wasserstein_or_euclidean</span><span class="p">,</span>
+    <span class="n">premade_cloud_regimes</span><span class="p">,</span>
+    <span class="n">lat_range</span><span class="p">,</span>
+    <span class="n">lon_range</span><span class="p">,</span>
+    <span class="n">time_range</span><span class="p">,</span>
+    <span class="n">only_ocean_or_land</span><span class="p">,</span>
+    <span class="n">land_frac_var_name</span><span class="p">,</span>
+    <span class="n">cluster</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -534,13 +556,13 @@ To use wasserstein distance please install the wasserstein package in your envir
 </div>
 </div>
 </div>
-<div class="section" id="preforming-clustering">
-<h2>Preforming Clustering<a class="headerlink" href="#preforming-clustering" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>Preforming clustering for k in k_range and creating relevant plots. We’ll debrief these results below.</p>
+<div class="section" id="performing-clustering">
+<h2>Performing Clustering<a class="headerlink" href="#performing-clustering" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
+<p>Performing clustering for k in <code class="docutils literal notranslate"><span class="pre">k_range</span></code> and creating relevant plots. We’ll debrief these results below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preform clustering with specified distance metric, for all values of k in k_range and create diagnostic plots</span>
-<span class="n">cl_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># cariable to save cl for various values of k </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perform clustering with specified distance metric, for all values of k in k_range and create diagnostic plots</span>
+<span class="n">cl_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># variable to save cl for various values of k </span>
 <span class="n">ratio_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">k_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)):</span>
     <span class="k">if</span> <span class="n">wasserstein_or_euclidean</span> <span class="o">==</span> <span class="s2">&quot;wasserstein&quot;</span><span class="p">:</span>
@@ -576,36 +598,36 @@ To use wasserstein distance please install the wasserstein package in your envir
 </div>
 <img alt="../_images/d4eb21937254e44fb9071a2fb72ba952a7c9843d97a3a4e8e9f20d336540a206.png" src="../_images/d4eb21937254e44fb9071a2fb72ba952a7c9843d97a3a4e8e9f20d336540a206.png" />
 <img alt="../_images/e0fb7783560a943ef8c615bd8652c1b25920c90ec6ee164d6a71ef7afb859a55.png" src="../_images/e0fb7783560a943ef8c615bd8652c1b25920c90ec6ee164d6a71ef7afb859a55.png" />
-<img alt="../_images/f045bfe22da3c1986d80279fd904f1309b66bdefac8c133dd06d719b80fef0a2.png" src="../_images/f045bfe22da3c1986d80279fd904f1309b66bdefac8c133dd06d719b80fef0a2.png" />
+<img alt="../_images/3854a2fe69231e35dda7d81414e3a7059caa2bd8ac1e7c58c3cfc651319b5be0.png" src="../_images/3854a2fe69231e35dda7d81414e3a7059caa2bd8ac1e7c58c3cfc651319b5be0.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda3/envs/cookbook-dev/lib/python3.10/site-packages/cartopy/io/__init__.py:241: DownloadWarning: Downloading: https://naturalearth.s3.amazonaws.com/110m_physical/ne_110m_coastline.zip
   warnings.warn(f&#39;Downloading: {url}&#39;, DownloadWarning)
 </pre></div>
 </div>
-<img alt="../_images/45c4c89c9a32769d428c6747ed1df0ddb6614c77612cf9ca178b3d61761e2fe0.png" src="../_images/45c4c89c9a32769d428c6747ed1df0ddb6614c77612cf9ca178b3d61761e2fe0.png" />
+<img alt="../_images/df08e7335272b8e9da12588fae3c9be35e7d0d3f498752f6812ffa5a355fd030.png" src="../_images/df08e7335272b8e9da12588fae3c9be35e7d0d3f498752f6812ffa5a355fd030.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
 </pre></div>
 </div>
-<img alt="../_images/36b077eaffd8b7757d8ce77c80453b38737fedb126237e622936b5dd19dd23e5.png" src="../_images/36b077eaffd8b7757d8ce77c80453b38737fedb126237e622936b5dd19dd23e5.png" />
-<img alt="../_images/5700fe260b492f6a342b1a49ebd9aacb7d87537dde9e83e0269684588799a2da.png" src="../_images/5700fe260b492f6a342b1a49ebd9aacb7d87537dde9e83e0269684588799a2da.png" />
-<img alt="../_images/d5a9617c008e701161ef5f2c47abe6fd4f32709d5be6448bcbf3eb7f38ea484f.png" src="../_images/d5a9617c008e701161ef5f2c47abe6fd4f32709d5be6448bcbf3eb7f38ea484f.png" />
-<img alt="../_images/bd3a88bcfaec2182a65a08e1ea57a984b219890d7cf14358849f715feba1b8c0.png" src="../_images/bd3a88bcfaec2182a65a08e1ea57a984b219890d7cf14358849f715feba1b8c0.png" />
-<img alt="../_images/13346feffff3798d8d0aac9ae35008175bdc7d41303e65b3c4d6a1577b97a930.png" src="../_images/13346feffff3798d8d0aac9ae35008175bdc7d41303e65b3c4d6a1577b97a930.png" />
+<img alt="../_images/806e0d07a7e6da5c238f92f5b6d01f3bf17735a9c1483aa023a2ccd731fc5883.png" src="../_images/806e0d07a7e6da5c238f92f5b6d01f3bf17735a9c1483aa023a2ccd731fc5883.png" />
+<img alt="../_images/2319aff59b40aee1d47a802f9e8c7b9e04ed9458370b85a39e5045a6796bd66d.png" src="../_images/2319aff59b40aee1d47a802f9e8c7b9e04ed9458370b85a39e5045a6796bd66d.png" />
+<img alt="../_images/e63269ef9fdae853db6c875d189774b7d817b644e0e65605c560602b9b087acc.png" src="../_images/e63269ef9fdae853db6c875d189774b7d817b644e0e65605c560602b9b087acc.png" />
+<img alt="../_images/387c159bc6cdbd80d7d776c6aad09fdbcec78bd1d0f18e06f810c0d5a8cb5145.png" src="../_images/387c159bc6cdbd80d7d776c6aad09fdbcec78bd1d0f18e06f810c0d5a8cb5145.png" />
+<img alt="../_images/ece7314f4331ff7963510c5e2b29998602ccc868dfbbc56ebecf22cc0f01bf40.png" src="../_images/ece7314f4331ff7963510c5e2b29998602ccc868dfbbc56ebecf22cc0f01bf40.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
 </pre></div>
 </div>
-<img alt="../_images/298c5c56d6fd63417de93bf29650bf1977c84a69fdc96b1279ac59f9ac6c6683.png" src="../_images/298c5c56d6fd63417de93bf29650bf1977c84a69fdc96b1279ac59f9ac6c6683.png" />
-<img alt="../_images/41c6bd907b348243ffd997e85a6a8c60f3fb6317aa90c34b6e7a0eba7b6b65ea.png" src="../_images/41c6bd907b348243ffd997e85a6a8c60f3fb6317aa90c34b6e7a0eba7b6b65ea.png" />
-<img alt="../_images/85bc008b7d14f0fb61bdebde12912925e79d7cb67f8dedef1cfe640edf7d20dc.png" src="../_images/85bc008b7d14f0fb61bdebde12912925e79d7cb67f8dedef1cfe640edf7d20dc.png" />
-<img alt="../_images/3b48f067ca1f1bbe11b73994124ac0bf83437fbe16fa62fe0b316287b5ffc0e9.png" src="../_images/3b48f067ca1f1bbe11b73994124ac0bf83437fbe16fa62fe0b316287b5ffc0e9.png" />
-<img alt="../_images/edc239702d02b54936beec989992be70ea3e464d5402ac2fb0d40c248bcdc6a3.png" src="../_images/edc239702d02b54936beec989992be70ea3e464d5402ac2fb0d40c248bcdc6a3.png" />
+<img alt="../_images/573a7f1a2dc449f678c5f22a2afc002986dbe47aaf758659c3545cea4db7d15b.png" src="../_images/573a7f1a2dc449f678c5f22a2afc002986dbe47aaf758659c3545cea4db7d15b.png" />
+<img alt="../_images/4c9d8d6e34ea02a82c87d6e02ba44bbf4b331d0a1408a430056694ab92ac3803.png" src="../_images/4c9d8d6e34ea02a82c87d6e02ba44bbf4b331d0a1408a430056694ab92ac3803.png" />
+<img alt="../_images/3a6c0109aba7a85d09ba081d33fb56dfd55a3f1982f9e9caa6c6a41a64158a67.png" src="../_images/3a6c0109aba7a85d09ba081d33fb56dfd55a3f1982f9e9caa6c6a41a64158a67.png" />
+<img alt="../_images/1f9a6f180df5aae9c16e7484342886e72784a132eaf71fe7488ad8c5fe62a179.png" src="../_images/1f9a6f180df5aae9c16e7484342886e72784a132eaf71fe7488ad8c5fe62a179.png" />
+<img alt="../_images/d788b0308c99d8c2cd8f1217bda4ef61eadb0dd1a5f07a11b9c76cbd40d4daac.png" src="../_images/d788b0308c99d8c2cd8f1217bda4ef61eadb0dd1a5f07a11b9c76cbd40d4daac.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__array_function__ internals&gt;:200: RuntimeWarning: invalid value encountered in cast
 </pre></div>
 </div>
-<img alt="../_images/cd95346f30150b46eb0cc81533d365206bae308d34204be7a51d3a7095097304.png" src="../_images/cd95346f30150b46eb0cc81533d365206bae308d34204be7a51d3a7095097304.png" />
-<img alt="../_images/b2bea9677c3e150069693ef185e3f9ef3b297b519c0c3165f9d0f46b2ed60f2d.png" src="../_images/b2bea9677c3e150069693ef185e3f9ef3b297b519c0c3165f9d0f46b2ed60f2d.png" />
-<img alt="../_images/e47d11e537b93b4c2f2282c2241a83e08353a551997e4168f5a6064c755c57c0.png" src="../_images/e47d11e537b93b4c2f2282c2241a83e08353a551997e4168f5a6064c755c57c0.png" />
-<img alt="../_images/872f5393380ddc3207df23640f7f27cee930edb9487e314a78db733f4309b9e0.png" src="../_images/872f5393380ddc3207df23640f7f27cee930edb9487e314a78db733f4309b9e0.png" />
-<img alt="../_images/227aab2755fdfb31e6b2df63a3ae08e87ec00783b5037b5d67073793d76a8bce.png" src="../_images/227aab2755fdfb31e6b2df63a3ae08e87ec00783b5037b5d67073793d76a8bce.png" />
+<img alt="../_images/ee9d0b783ccbd1bfa9747e628536707bb1f649c5f9d10dc391a206aa5081ff22.png" src="../_images/ee9d0b783ccbd1bfa9747e628536707bb1f649c5f9d10dc391a206aa5081ff22.png" />
+<img alt="../_images/b18e0e73cede7c6b28fb9fc5eb328122f6434456d40c70078786fc83ec3521a5.png" src="../_images/b18e0e73cede7c6b28fb9fc5eb328122f6434456d40c70078786fc83ec3521a5.png" />
+<img alt="../_images/86ffec772811a8568c237573e29edf174037a90e9de55dc6748e350d78166e49.png" src="../_images/86ffec772811a8568c237573e29edf174037a90e9de55dc6748e350d78166e49.png" />
+<img alt="../_images/208785685ebedb6d5beaaa866a422dd555b18d08c5736939363f675fbad9cb5a.png" src="../_images/208785685ebedb6d5beaaa866a422dd555b18d08c5736939363f675fbad9cb5a.png" />
+<img alt="../_images/0cb6382eda7f65a18f6439b264059e94badc66aa04223505f2f5526af6820f4d.png" src="../_images/0cb6382eda7f65a18f6439b264059e94badc66aa04223505f2f5526af6820f4d.png" />
 </div>
 </div>
 <p>For the ISCCP toy data included in this cookbook (which includes only two years of monthly data from 30N to 30S) we see that k=2 initially creates essentially a low cloud and high cloud CR. Increasing k to 3 breaks up the low cloud CR into a thicker stratocumulus regime, and a thinner more general shallow convection regime. Increasing once again to K=4 breaks up the high cloud CR into a deep convection and a more general high cloud/cirrus CR. At k=5 our general low cloud/shallow convection CR splits once again. However, this time the split is highly correlated with other cloud regimes created in k=5. So here, I’d say that k=4 is the most ideal.</p>
@@ -699,7 +721,7 @@ To use wasserstein distance please install the wasserstein package in your envir
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 18 August 2023.
+          Last updated on 14 September 2023.
         </p>
       </div>
     </div>

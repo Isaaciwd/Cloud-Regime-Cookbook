@@ -14,16 +14,19 @@ The purpose of this cookbook is to lower the barrier to entry of Cloud Regime (C
 ## Authors
 
 [Isaac Davis](@first-author), [Brian Medeiros](@second-author)
-### Contributors
-
-<a href="https://github.com/ProjectPythia/cookbook-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ProjectPythia/cookbook-template" />
-</a>
+<!-- ### Contributors
+Add contributors when there are more than just Isaac and Brian
+ -->
 
 ## Structure
 
-This cookbook is broken up into 4 main sections - Introduction, Choosing a Value of k, Testing Cluster Robustness / Repeatability of Results, and Mapping and Analyzing Cloud Regimes 
+This cookbook is organized into 4 sections: 
+- Introduction
+- Choosing a Value of k
+- Testing Cluster Robustness / Repeatability of Results
+- Mapping and Analyzing Cloud Regimes 
 
+In addition, `Functions.py` provides a small library of functions that are used in the Notebooks.
 
 ### Introduction
 
@@ -39,7 +42,20 @@ How to check that results are robust and repeatable.
 
 ### Mapping and Analyzing Cloud Regimes 
 
-Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis.
+Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis. Briefly, these are:
+| __function__  | __description__ | 
+| ------------- | --------------- | 
+| `open_and_process` | Open data, process into a matrix for clustering, cluster, and/or create cluster labels |
+| `plot_hists` | Plot the cloud regime cluster centers |
+| `plot_rfo` | Plot relative frequency of occurrence maps of the cloud regimes |
+| `emd_means` | K-means algorithm that uses wasserstein distance |
+| `euclidean_kmeans` | Conventional kmeans using sklearn |
+| `precomputed_clusters` | Compute cluster labels from precomputed cluster centers with appropriate distance |
+| `create_land_mask` | Create a one hot matrix where lat lon coordinates are over land using cartopy |
+| `plot_hists_k_testing` | Plot histograms from k sensitivty testing |
+| `histogram_cor` | Create correlation matricies between the cluster centers of all cloud regimes |
+| `spatial_cor` | Create correlation matricies between the spatial distribution of all cloud regimes |
+| `kp1_histogram_cor` | Create correlation matricies between the cluster centers of k and (k+1) CRs |
 
 ## Running the Notebooks
 
@@ -68,22 +84,22 @@ If you are interested in running this material locally on your computer, you wil
 
 (Replace "cookbook-example" with the title of your cookbooks)
 
-1. Clone the `https://github.com/ProjectPythia/cookbook-example` repository:
+1. Clone the `https://github.com/Isaaciwd/Cloud-Regime-Cookbook` repository:
 
    ```bash
-    git clone https://github.com/ProjectPythia/cookbook-example.git
+    git clone git@github.com:Isaaciwd/Cloud-Regime-Cookbook.git
    ```
 
-1. Move into the `cookbook-example` directory
+2. Move into the `Cloud-Regime-Cookbook` directory
    ```bash
-   cd cookbook-example
+   cd Cloud-Regime-Cookbook
    ```
-1. Create and activate your conda environment from the `environment.yml` file
+3. Create and activate your conda environment from the `environment.yml` file
    ```bash
    conda env create -f environment.yml
-   conda activate cookbook-example
+   conda activate cookbook-dev
    ```
-1. Move into the `notebooks` directory and start up Jupyterlab
+4. Move into the `notebooks` directory and start up Jupyterlab
    ```bash
    cd notebooks/
    jupyter lab

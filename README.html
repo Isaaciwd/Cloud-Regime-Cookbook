@@ -327,13 +327,6 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
   <a class="reference internal nav-link" href="#authors">
    Authors
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contributors">
-     Contributors
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#structure">
@@ -403,16 +396,20 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 <div class="section" id="authors">
 <h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
 <p><span class="xref myst">Isaac Davis</span>, <span class="xref myst">Brian Medeiros</span></p>
-<div class="section" id="contributors">
-<h3>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
-<a href="https://github.com/ProjectPythia/cookbook-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=ProjectPythia/cookbook-template" />
-</a>
-</div>
+<!-- ### Contributors
+Add contributors when there are more than just Isaac and Brian
+ -->
 </div>
 <div class="section" id="structure">
 <h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline"><i class="fas fa-link"></i></a></h2>
-<p>This cookbook is broken up into 4 main sections - Introduction, Choosing a Value of k, Testing Cluster Robustness / Repeatability of Results, and Mapping and Analyzing Cloud Regimes</p>
+<p>This cookbook is organized into 4 sections:</p>
+<ul class="simple">
+<li><p>Introduction</p></li>
+<li><p>Choosing a Value of k</p></li>
+<li><p>Testing Cluster Robustness / Repeatability of Results</p></li>
+<li><p>Mapping and Analyzing Cloud Regimes</p></li>
+</ul>
+<p>In addition, <code class="docutils literal notranslate"><span class="pre">Functions.py</span></code> provides a small library of functions that are used in the Notebooks.</p>
 <div class="section" id="introduction">
 <h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
 <p>An introduction to the concept of Cloud Regimes and how they are used.</p>
@@ -427,7 +424,49 @@ All code in Pythia Cookbooks is licensed under Apache 2.0. All other non-code co
 </div>
 <div class="section" id="mapping-and-analyzing-cloud-regimes">
 <h3>Mapping and Analyzing Cloud Regimes<a class="headerlink" href="#mapping-and-analyzing-cloud-regimes" title="Permalink to this headline"><i class="fas fa-link"></i></a></h3>
-<p>Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis.</p>
+<p>Now that the user has created a robust set of Cloud Regimes, we map them out and can preform further analysis. Briefly, these are:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>function</strong></p></th>
+<th class="head"><p><strong>description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">open_and_process</span></code></p></td>
+<td><p>Open data, process into a matrix for clustering, cluster, and/or create cluster labels</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plot_hists</span></code></p></td>
+<td><p>Plot the cloud regime cluster centers</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">plot_rfo</span></code></p></td>
+<td><p>Plot relative frequency of occurrence maps of the cloud regimes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">emd_means</span></code></p></td>
+<td><p>K-means algorithm that uses wasserstein distance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">euclidean_kmeans</span></code></p></td>
+<td><p>Conventional kmeans using sklearn</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">precomputed_clusters</span></code></p></td>
+<td><p>Compute cluster labels from precomputed cluster centers with appropriate distance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">create_land_mask</span></code></p></td>
+<td><p>Create a one hot matrix where lat lon coordinates are over land using cartopy</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">plot_hists_k_testing</span></code></p></td>
+<td><p>Plot histograms from k sensitivty testing</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">histogram_cor</span></code></p></td>
+<td><p>Create correlation matricies between the cluster centers of all cloud regimes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">spatial_cor</span></code></p></td>
+<td><p>Create correlation matricies between the spatial distribution of all cloud regimes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kp1_histogram_cor</span></code></p></td>
+<td><p>Create correlation matricies between the cluster centers of k and (k+1) CRs</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section" id="running-the-notebooks">
@@ -455,19 +494,19 @@ Jupyter</a>.</p>
 <p>If you are interested in running this material locally on your computer, you will need to follow this workflow:</p>
 <p>(Replace “cookbook-example” with the title of your cookbooks)</p>
 <ol class="arabic">
-<li><p>Clone the <code class="docutils literal notranslate"><span class="pre">https://github.com/ProjectPythia/cookbook-example</span></code> repository:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ProjectPythia/cookbook-example.git
+<li><p>Clone the <code class="docutils literal notranslate"><span class="pre">https://github.com/Isaaciwd/Cloud-Regime-Cookbook</span></code> repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:Isaaciwd/Cloud-Regime-Cookbook.git
 </pre></div>
 </div>
 </li>
-<li><p>Move into the <code class="docutils literal notranslate"><span class="pre">cookbook-example</span></code> directory</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>cookbook-example
+<li><p>Move into the <code class="docutils literal notranslate"><span class="pre">Cloud-Regime-Cookbook</span></code> directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>Cloud-Regime-Cookbook
 </pre></div>
 </div>
 </li>
 <li><p>Create and activate your conda environment from the <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml
-conda<span class="w"> </span>activate<span class="w"> </span>cookbook-example
+conda<span class="w"> </span>activate<span class="w"> </span>cookbook-dev
 </pre></div>
 </div>
 </li>
@@ -565,7 +604,7 @@ jupyter<span class="w"> </span>lab
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 18 August 2023.
+          Last updated on 14 September 2023.
         </p>
       </div>
     </div>
